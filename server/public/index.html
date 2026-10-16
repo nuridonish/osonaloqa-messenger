@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="tg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OSON ALOQA</title>
+<style>
+:root {
+  --primary: #12A150; --primary-dark: #0B7A3B; --container: #DDF5E6;
+  --accent: #2BD46B; --bg: #FFFFFF; --bg2: #F4F8F5;
+  --text: #0F1A14; --text2: #5B6B62; --out: #D8F5DF; --blue: #2F80ED; --red: #D93025;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --primary: #2BD46B; --container: #14532D; --bg: #0B1410; --bg2: #12201A;
+    --text: #E2EFE7; --text2: #9DB2A5; --out: #14532D; }
+}
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', system-ui, sans-serif; }
+body { background: var(--bg2); color: var(--text); height: 100vh; overflow: hidden; }
+
+.app { display: none; height: 100vh; }
+.app.active { display: flex; }
+
+/* Sidebar */
+.sidebar { width: 340px; min-width: 280px; background: var(--bg); border-right: 1px solid var(--bg2);
+  display: flex; flex-direction: column; }
+.header { background: var(--primary); color: #fff; padding: 16px 20px; }
+.header h1 { font-size: 20px; letter-spacing: 0.5px; }
+.header .me { font-size: 13px; opacity: 0.9; margin-top: 2px; }
+.conn { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; background: #ffcf40; }
+.conn.on { background: var(--accent); }
+.chatlist { flex: 1; overflow-y: auto; }
+.chatitem { display: flex; gap: 12px; padding: 12px 16px; cursor: pointer; align-items: center; }
+.chatitem:hover { background: var(--bg2); }
+.chatitem.sel { background: var(--container); }
+.avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--container); color: var(--primary);
+  display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; flex-shrink: 0; }
+.ci-body { flex: 1; min-width: 0; }
+.ci-top { display: flex; justify-content: space-between; }
+.ci-name { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ci-time { font-size: 12px; color: var(--text2); }
+.ci-bottom { display: flex; justify-content: space-between; align-items: center; }
+.ci-msg { font-size: 14px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ci-unread { background: var(--primary); color: #fff; border-radius: 12px; font-size: 12px;
+  padding: 2px 8px; font-weight: 600; }
+.statusbar { padding: 10px 16px; font-size: 13px; color: var(--text2); border-top: 1px solid var(--bg2); }
+
+/* Chat area */
+.chatarea { flex: 1; display: flex; flex-direction: column; }
+.chatheader { background: var(--bg); padding: 12px 20px; display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid var(--bg2); }
+.chatheader .avatar { width: 40px; height: 40px; font-size: 17px; }
+.ch-name { font-weight: 600; }
+.ch-status { font-size: 13px; color: var(--primary); }
+.messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 4px;
+  background: var(--bg2); }
+.bubble { max-width: 480px; padding: 8px 12px; border-radius: 16px; font-size: 15px;
+  background: var(--bg); align-self: flex-start; border-bottom-left-radius: 4px; box-shadow: 0 1px 1px rgba(0,0,0,0.06); }
+.bubble.out { background: var(--out); align-self: flex-end; border-radius: 16px 16px 4px 16px; }
+.b-meta { display: flex; gap: 5px; justify-content: flex-end; align-items: center; margin-top: 2px;
+  font-size: 11px; color: var(--text2); }
+.b-meta .read { color: var(--blue); }
+.banner { text-align: center; font-size: 12px; color: var(--text2); background: var(--bg);
+  padding: 6px; border-radius: 10px; margin: 0 auto 8px; }
+.composer { display: flex; gap: 10px; padding: 12px 16px; background: var(--bg); align-items: flex-end; }
+.composer textarea { flex: 1; resize: none; border: 1.5px solid var(--bg2); border-radius: 22px;
+  padding: 11px 16px; font-size: 15px; outline: none; background: var(--bg2); color: var(--text);
+  max-height: 120px; }
+.composer textarea:focus { border-color: var(--primary); }
+.sendbtn { width: 46px; height: 46px; border-radius: 50%; border: none; background: var(--primary);
+  color: #fff; font-size: 19px; cursor: pointer; flex-shrink: 0; }
+.sendbtn:disabled { opacity: 0.4; }
+
+/* Auth screens */
+.auth { display: none; height: 100vh; align-items: center; justify-content: center; }
+.auth.active { display: flex; }
+.card { background: var(--bg); border-radius: 24px; padding: 40px; width: 400px; max-width: 92vw;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.12); text-align: center; }
+.logo { width: 84px; height: 84px; border-radius: 24px; background: var(--primary); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 900;
+  margin: 0 auto 16px; }
+.card h2 { margin-bottom: 6px; }
+.card .sub { color: var(--text2); font-size: 14px; margin-bottom: 22px; }
+.card input, .card select { width: 100%; padding: 12px 14px; margin-bottom: 12px; border-radius: 12px;
+  border: 1.5px solid var(--bg2); background: var(--bg2); color: var(--text); font-size: 15px; outline: none; }
+.card input:focus { border-color: var(--primary); }
+.btn { width: 100%; padding: 13px; border: none; border-radius: 12px; background: var(--primary);
+  color: #fff; font-size: 16px; font-weight: 600; cursor: pointer; }
+.btn:disabled { opacity: 0.5; }
+.err { color: var(--red); font-size: 13px; margin-bottom: 10px; }
+.row { display: flex; gap: 8px; }
+.row select { flex: 1; } .row input { flex: 2; }
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<div id="scr-login" class="auth active">
+  <div class="card">
+    <div class="logo">OA</div>
+    <h2>OSON ALOQA</h2>
+    <div class="sub">Мессенҷери зебо ва бехатари шумо</div>
+    <select id="country"></select>
+    <input id="phone" placeholder="Рақами телефон" inputmode="numeric">
+    <div id="err1" class="err hidden"></div>
+    <button class="btn" id="btn-send">Фиристодани код</button>
+  </div>
+</div>
+
+<div id="scr-otp" class="auth">
+  <div class="card">
+    <div class="logo">OA</div>
+    <h2>Тасдиқи рақам</h2>
+    <div class="sub" id="otp-sub"></div>
+    <input id="code" placeholder="Коди 6-рақама (dev: 000000)" inputmode="numeric" maxlength="6">
+    <div id="err2" class="err hidden"></div>
+    <button class="btn" id="btn-verify">Тасдиқ кардан</button>
+  </div>
+</div>
+
+<div id="scr-profile" class="auth">
+  <div class="card">
+    <div class="logo">OA</div>
+    <h2>Маълумоти профил</h2>
+    <div class="sub">Номи худро ворид кунед</div>
+    <input id="name" placeholder="Номи шумо">
+    <div id="err3" class="err hidden"></div>
+    <button class="btn" id="btn-profile">Идома</button>
+  </div>
+</div>
+
+<div id="scr-app" class="app">
+  <div class="sidebar">
+    <div class="header">
+      <h1>OSON ALOQA</h1>
+      <div class="me"><span class="conn" id="conn"></span><span id="me-name"></span></div>
+    </div>
+    <div class="chatlist" id="chatlist"></div>
+    <div class="statusbar">Телефон бо +992... ворид шавед дар browser-и телефон низ</div>
+  </div>
+  <div class="chatarea">
+    <div class="chatheader" id="chheader" style="visibility:hidden">
+      <div class="avatar" id="ch-av"></div>
+      <div><div class="ch-name" id="ch-name"></div><div class="ch-status" id="ch-status"></div></div>
+    </div>
+    <div class="messages" id="messages"></div>
+    <div class="composer">
+      <textarea id="text" rows="1" placeholder="Паём"></textarea>
+      <button class="sendbtn" id="btn-sendmsg" disabled>➤</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+let session = null, ws = null, chats = [], curChat = null, msgs = [], peerStates = {}, typingTimer = null;
+
+function show(id) {
+  document.querySelectorAll('.auth, .app').forEach(e => e.classList.remove('active'));
+  $(id).classList.add('active');
+}
+
+async function api(method, path, body, auth = true) {
+  const res = await fetch(path, {
+    method,
+    headers: { 'content-type': 'application/json', ...(auth && session ? { authorization: 'Bearer ' + session.accessToken } : {}) },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  return res.json();
+}
+
+// --- Кишварҳо ---
+const COUNTRIES = [
+  ['TJ','🇹🇯','+992','Тоҷикистон'],['UZ','🇺🇿','+998','Ӯзбекистон'],['RU','🇷🇺','+7','Русия'],
+  ['IR','🇮🇷','+98','Эрон'],['AF','🇦🇫','+93','Афғонистон'],['KZ','🇰🇿','+7','Қазоқистон'],
+  ['KG','🇰🇬','+996','Қирғизистон'],['TM','🇹🇲','+993','Туркманистон'],['TR','🇹🇷','+90','Туркия'],
+  ['DE','🇩🇪','+49','Олмон'],['US','🇺🇸','+1','ИМА'],['GB','🇬🇧','+44','Британия'],
+  ['CN','🇨🇳','+86','Хитой'],['IN','🇮🇳','+91','Ҳиндустон'],['SA','🇸🇦','+966','Саудия'],
+  ['AE','🇦🇪','+971','АМА'],['EG','🇪🇬','+20','Миср'],['UA','🇺🇦','+380','Украина'],
+  ['BY','🇧🇾','+375','Беларус'],['AZ','🇦🇿','+994','Озарбойҷон'],['AM','🇦🇲','+374','Арманистон'],
+  ['GE','🇬🇪','+995','Гурҷистон'],['MD','🇲🇩','+373','Молдова'],['LV','🇱🇻','+371','Латвия'],
+  ['LT','🇱🇹','+370','Литва'],['EE','🇪🇪','+372','Эстония'],['PL','🇵🇱','+48','Лаҳистон'],
+  ['FR','🇫🇷','+33','Франсия'],['IT','🇮🇹','+39','Италия'],['ES','🇪🇸','+34','Испания'],
+  ['NL','🇳🇱','+31','Голландия'],['SE','🇸🇪','+46','Шветсия'],['CH','🇨🇭','+41','Швейтсария'],
+  ['JP','🇯🇵','+81','Жопун'],['KR','🇰🇷','+82','Корея'],['BR','🇧🇷','+55','Бразилия'],
+  ['CA','🇨🇦','+1','Канада'],['AU','🇦🇺','+61','Австралия'],['PK','🇵🇰','+92','Покистон'],
+];
+const sel = $('country');
+COUNTRIES.forEach((c, i) => {
+  const o = document.createElement('option');
+  o.value = c[2]; o.textContent = `${c[1]} ${c[3]} (${c[2]})`;
+  sel.appendChild(o);
+});
+
+let pendingPhone = '';
+
+$('btn-send').onclick = async () => {
+  const nat = $('phone').value.replace(/\D/g, '');
+  if (nat.length < 6) { $('err1').textContent = 'Рақами нодуруст'; $('err1').classList.remove('hidden'); return; }
+  pendingPhone = sel.value + nat;
+  const r = await api('POST', '/v1/auth/request-otp', { phone: pendingPhone }, false);
+  if (r.error) { $('err1').textContent = r.error; $('err1').classList.remove('hidden'); return; }
+  $('err1').classList.add('hidden');
+  $('otp-sub').textContent = 'Код ба ' + pendingPhone + ' фиристода шуд';
+  show('scr-otp');
+  $('code').focus();
+};
+
+$('btn-verify').onclick = async () => {
+  const code = $('code').value.replace(/\D/g, '');
+  const r = await api('POST', '/v1/auth/verify', { phone: pendingPhone, code, deviceName: 'web' }, false);
+  if (!r.accessToken) { $('err2').textContent = 'Коди нодуруст'; $('err2').classList.remove('hidden'); return; }
+  session = r;
+  localStorage.setItem('oa-refresh', r.refreshToken);
+  if (r.isNew) show('scr-profile'); else { show('scr-app'); connect(); }
+};
+
+$('btn-profile').onclick = async () => {
+  const name = $('name').value.trim();
+  if (!name) return;
+  await api('PATCH', '/v1/users/me', { name });
+  $('me-name').textContent = name + ' · ' + session.user.phone;
+  show('scr-app');
+  connect();
+};
+
+function connect() {
+  const proto = location.protocol === 'https:' ? 'wss' : 'ws';
+  ws = new WebSocket(proto + '://' + location.host + '/v1/ws');
+  ws.onopen = () => ws.send(JSON.stringify({ type: 'auth', token: session.accessToken }));
+  ws.onmessage = (ev) => {
+    const m = JSON.parse(ev.data);
+    if (m.type === 'ready') { $('conn').classList.add('on'); refreshChats(); }
+    if (m.type === 'message.new') onNewMessage(m.message);
+    if (m.type === 'ack.update') onAck(m);
+    if (m.type === 'typing') {
+      peerStates[m.userId] = { ...(peerStates[m.userId] || {}), typing: m.on };
+      updateHeader(); renderChats();
+    }
+    if (m.type === 'presence') {
+      peerStates[m.userId] = { ...(peerStates[m.userId] || {}), online: m.online, typing: false };
+      renderChats(); updateHeader();
+    }
+  };
+  ws.onclose = () => { $('conn').classList.remove('on'); setTimeout(connect, 2000); };
+}
+
+async function refreshChats() {
+  const r = await api('GET', '/v1/chats');
+  chats = r.chats || [];
+  renderChats();
+}
+
+function renderChats() {
+  const list = $('chatlist');
+  list.innerHTML = '';
+  if (!chats.length) {
+    list.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text2);font-size:14px">Ҳанӯз чат нест.<br>Ба дигар браузер ё телефон низ ворид шавед — сипас рақамро ҷустуҷӯ хоҳед кард?</div>';
+    return;
+  }
+  chats.forEach(c => {
+    const div = document.createElement('div');
+    div.className = 'chatitem' + (curChat === c.id ? ' sel' : '');
+    const who = c.peer ? (c.peer.name || c.peer.phone) : c.title;
+    const dot = c.peer && (peerStates[c.peer.id] || {}).online ? ' 🟢' : '';
+    div.innerHTML = `<div class="avatar">${(who[0] || '?').toUpperCase()}</div>
+      <div class="ci-body"><div class="ci-top"><span class="ci-name">${esc(who)}${dot}</span>
+      <span class="ci-time">${fmt(c.lastMessage?.createdAt || c.updated_at)}</span></div>
+      <div class="ci-bottom"><span class="ci-msg">${esc(c.lastMessage?.body || '')}</span>
+      ${c.unread ? `<span class="ci-unread">${c.unread}</span>` : ''}</div></div>`;
+    div.onclick = () => openChat(c.id);
+    list.appendChild(div);
+  });
+}
+
+async function openChat(id) {
+  curChat = id;
+  const r = await api('GET', `/v1/chats/${id}/messages?limit=200`);
+  msgs = r.messages || [];
+  renderMessages();
+  renderChats();
+  updateHeader();
+  const last = msgs[msgs.length - 1];
+  if (last) ws.send(JSON.stringify({ type: 'ack', messageId: last.id, state: 'read' }));
+  await api('POST', `/v1/chats/${id}/read`, { seq: msgs.length ? msgs[msgs.length - 1].seq : 0 });
+}
+
+function updateHeader() {
+  const c = chats.find(x => x.id === curChat);
+  if (!c || !c.peer) return;
+  const who = c.peer.name || c.peer.phone;
+  $('chheader').style.visibility = 'visible';
+  $('ch-av').textContent = (who[0] || '?').toUpperCase();
+  $('ch-name').textContent = who;
+  const ps = peerStates[c.peer.id] || {};
+  $('ch-status').textContent = ps.typing ? 'менависад…' : (ps.online || c.peer.online) ? 'онлайн' : '';
+}
+
+function onNewMessage(m) {
+  if (!msgs.find(x => x.id === m.id)) msgs.push(m);
+  if (m.chatId === curChat) {
+    renderMessages();
+    ws.send(JSON.stringify({ type: 'ack', messageId: m.id, state: 'read' }));
+  }
+  refreshChats();
+}
+
+function onAck(m) {
+  if (m.messageId) {
+    const msg = msgs.find(x => x.id === m.messageId);
+    if (msg) msg.state = m.state;
+  } else if (m.lastReadSeq != null) {
+    msgs.forEach(x => { if (x.seq <= m.lastReadSeq) x.state = 'read'; });
+  }
+  renderMessages();
+}
+
+function renderMessages() {
+  const box = $('messages');
+  box.innerHTML = '<div class="banner">🔒 Паёмҳо дар ин намоиш ба сервер мераванд; рамзгузории пурраи end-to-end дар M9</div>';
+  msgs.forEach(m => {
+    const out = m.senderId === session.user.id;
+    const div = document.createElement('div');
+    div.className = 'bubble' + (out ? ' out' : '');
+    const ticks = out ? (m.state === 'pending' ? '🕐' : m.state === 'sent' ? '✓' : '<span class="read">✓✓</span>') : '';
+    div.innerHTML = `${esc(m.body)}<div class="b-meta">${fmt(m.createdAt)} ${ticks}</div>`;
+    box.appendChild(div);
+  });
+  box.scrollTop = box.scrollHeight;
+}
+
+$('text').addEventListener('input', e => {
+  $('btn-sendmsg').disabled = !e.target.value.trim();
+  if (curChat) {
+    ws.send(JSON.stringify({ type: 'typing', chatId: curChat, on: true }));
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(() => ws.send(JSON.stringify({ type: 'typing', chatId: curChat, on: false })), 2500);
+  }
+});
+
+$('btn-sendmsg').onclick = send;
+$('text').addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+});
+
+function send() {
+  const t = $('text').value.trim();
+  if (!t || !curChat) return;
+  $('text').value = '';
+  $('btn-sendmsg').disabled = true;
+  ws.send(JSON.stringify({ type: 'message.send', clientId: crypto.randomUUID(), chatId: curChat, body: t }));
+}
+
+function fmt(ts) {
+  if (!ts) return '';
+  const d = new Date(ts);
+  return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+function esc(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+</script>
+</body>
+</html>
