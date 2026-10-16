@@ -13,3 +13,31 @@ OSON ALOQA server: http://127.0.0.1:8080 (env=development)
 {"level":30,"time":1792179237706,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-4","res":{"statusCode":200},"responseTime":11.454999999998108,"msg":"request completed"}
 {"level":30,"time":1792179237996,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-5","req":{"method":"PATCH","url":"/v1/users/me","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49598},"msg":"incoming request"}
 {"level":30,"time":1792179238002,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-5","res":{"statusCode":200},"responseTime":6.293900000000576,"msg":"request completed"}
+{"level":30,"time":1792179269968,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-6","req":{"method":"GET","url":"/health","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49605},"msg":"incoming request"}
+{"level":30,"time":1792179269970,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-6","res":{"statusCode":200},"responseTime":1.3646999999982654,"msg":"request completed"}
+{"level":30,"time":1792179270111,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-7","req":{"method":"GET","url":"/","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
+{"level":30,"time":1792179270149,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-7","res":{"statusCode":200},"responseTime":38.17370000000665,"msg":"request completed"}
+{"level":30,"time":1792179270686,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-8","req":{"method":"GET","url":"/favicon.ico","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
+{"level":30,"time":1792179270698,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-8","msg":"Route GET:/favicon.ico not found"}
+{"level":30,"time":1792179270699,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-8","res":{"statusCode":404},"responseTime":12.943100000004051,"msg":"request completed"}
+{"level":30,"time":1792179300078,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-9","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
+{"level":30,"time":1792179300082,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-9","res":{"statusCode":400},"responseTime":3.655899999997928,"msg":"request completed"}
+{"level":30,"time":1792179303410,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-a","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
+{"level":30,"time":1792179303413,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-a","res":{"statusCode":400},"responseTime":2.839700000011362,"msg":"request completed"}
+{"level":30,"time":1792179328376,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-b","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
+{"level":30,"time":1792179328378,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-b","res":{"statusCode":400},"responseTime":1.9300999999977648,"msg":"request completed"}
+{"level":30,"time":1792179329277,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-c","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
+{"level":30,"time":1792179329279,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-c","res":{"statusCode":400},"responseTime":1.6168999999936204,"msg":"request completed"}
+{"level":30,"time":1792179329458,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-d","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
+{"level":30,"time":1792179329460,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-d","res":{"statusCode":400},"responseTime":1.388200000001234,"msg":"request completed"}
+{"level":30,"time":1792179329683,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-e","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
+{"level":30,"time":1792179329687,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-e","res":{"statusCode":400},"responseTime":4.02390000000014,"msg":"request completed"}
+{"level":30,"time":1792179329899,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-f","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
+{"level":30,"time":1792179329901,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-f","res":{"statusCode":400},"responseTime":1.9386999999987893,"msg":"request completed"}
+{"level":30,"time":1792179443340,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-g","req":{"method":"GET","url":"/app-debug.apk","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49630},"msg":"incoming request"}
+{"level":30,"time":1792179443347,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-g","res":{"statusCode":206},"responseTime":7.088499999983469,"msg":"request completed"}
+{"level":30,"time":1792179483872,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-h","req":{"method":"GET","url":"/app-debug.apk","host":"192.168.100.126:8080","remoteAddress":"192.168.100.126","remotePort":49631},"msg":"incoming request"}
+{"level":30,"time":1792179483879,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-h","res":{"statusCode":206},"responseTime":6.431999999971595,"msg":"request completed"}
+{"level":30,"time":1792179519881,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-i","req":{"method":"GET","url":"/favicon.ico","host":"127.0.0.1:8080","remoteAddress":"127.0.0.1","remotePort":49635},"msg":"incoming request"}
+{"level":30,"time":1792179519886,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-i","msg":"Route GET:/favicon.ico not found"}
+{"level":30,"time":1792179519887,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-i","res":{"statusCode":404},"responseTime":4.790399999998044,"msg":"request completed"}
