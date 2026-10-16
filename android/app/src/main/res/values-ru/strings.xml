@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Осон Алоқа</string>
+    <string name="welcome_tagline">Ваш красивый и безопасный мессенджер. Сообщения, звонки и статусы — всё в одном месте.</string>
+    <string name="welcome_continue">Продолжить</string>
+    <string name="settings">Настройки</string>
+    <string name="enter_phone_title">Ваш телефон</string>
+    <string name="enter_phone_hint">Выберите код страны и введите свой номер. Поддерживаются все страны мира.</string>
+    <string name="phone_number">Номер телефона</string>
+    <string name="send_code">Отправить код</string>
+    <string name="search_country">Поиск страны…</string>
+    <string name="otp_title">Подтверждение номера</string>
+    <string name="otp_sent_to">Мы отправили код на %1$s. Введите его.</string>
+    <string name="otp_code">6-значный код</string>
+    <string name="otp_dev_hint">Режим разработки: код 000000</string>
+    <string name="otp_verify">Подтвердить</string>
+    <string name="profile_info_title">Данные профиля</string>
+    <string name="profile_info_hint">Введите своё имя и добавьте фото</string>
+    <string name="profile_name">Ваше имя</string>
+    <string name="profile_next">Далее</string>
+    <string name="tab_chats">Чаты</string>
+    <string name="tab_status">Статус</string>
+    <string name="tab_communities">Сообщества</string>
+    <string name="tab_calls">Звонки</string>
+    <string name="new_chat">Новый чат</string>
+    <string name="search">Поиск…</string>
+    <string name="no_chats">Пока нет чатов. Начните свой первый чат!</string>
+    <string name="no_messages">Нет сообщений</string>
+    <string name="status_e2e_note">Ваши статусы защищены сквозным шифрованием</string>
+    <string name="no_statuses">Пока нет статусов</string>
+    <string name="new_text_status">Текстовый статус</string>
+    <string name="status_text">Текст статуса…</string>
+    <string name="send">Отправить</string>
+    <string name="cancel">Отмена</string>
+    <string name="communities_title">Сообщества</string>
+    <string name="communities_empty">Ваши сообщества будут отображаться здесь</string>
+    <string name="calls_title">Звонки</string>
+    <string name="calls_empty">История звонков будет здесь</string>
+    <string name="typing">печатает…</string>
+    <string name="online">в сети</string>
+    <string name="last_seen">был(а) в %1$s</string>
+    <string name="message_hint">Сообщение</string>
+    <string name="e2e_banner">Сообщения зашифрованы</string>
+    <string name="version">Версия</string>
+    <string name="server_url">Сервер</string>
+    <string name="target_android">Цель</string>
+</resources>

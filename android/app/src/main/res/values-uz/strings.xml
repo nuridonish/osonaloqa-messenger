@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Oson Aloqa</string>
+    <string name="welcome_tagline">Chiroyli va xavfsiz messenger. Xabarlar, qo‘ng‘iroqlar va statuslar — barchasi bir joyda.</string>
+    <string name="welcome_continue">Davom etish</string>
+    <string name="settings">Sozlamalar</string>
+    <string name="enter_phone_title">Telefoningiz</string>
+    <string name="enter_phone_hint">Mamlakat kodini tanlang va raqamingizni kiriting. Dunyoning barcha mamlakatlari qo‘llab-quvvatlanadi.</string>
+    <string name="phone_number">Telefon raqami</string>
+    <string name="send_code">Kodni yuborish</string>
+    <string name="search_country">Mamlakatni qidirish…</string>
+    <string name="otp_title">Raqamni tasdiqlash</string>
+    <string name="otp_sent_to">Kodni %1$s raqamiga yubordik. Uni kiriting.</string>
+    <string name="otp_code">6 xonali kod</string>
+    <string name="otp_dev_hint">Dasturchi rejimi: kod 000000</string>
+    <string name="otp_verify">Tasdiqlash</string>
+    <string name="profile_info_title">Profil ma’lumotlari</string>
+    <string name="profile_info_hint">Ismingizni kiriting va rasm qo‘shing</string>
+    <string name="profile_name">Ismingiz</string>
+    <string name="profile_next">Keyingi</string>
+    <string name="tab_chats">Suhbatlar</string>
+    <string name="tab_status">Status</string>
+    <string name="tab_communities">Jamiyatlar</string>
+    <string name="tab_calls">Qo‘ng‘iroqlar</string>
+    <string name="new_chat">Yangi suhbat</string>
+    <string name="search">Qidirish…</string>
+    <string name="no_chats">Hozircha suhbat yo‘q. Birinchi suhbatingizni boshlang!</string>
+    <string name="no_messages">Xabar yo‘q</string>
+    <string name="status_e2e_note">Statuslaringiz uchidan-uchga shifrlash bilan himoyalangan</string>
+    <string name="no_statuses">Hozircha status yo‘q</string>
+    <string name="new_text_status">Matnli status</string>
+    <string name="status_text">Status matni…</string>
+    <string name="send">Yuborish</string>
+    <string name="cancel">Bekor qilish</string>
+    <string name="communities_title">Jamiyatlar</string>
+    <string name="communities_empty">Jamiyatlaringiz shu yerda ko‘rinadi</string>
+    <string name="calls_title">Qo‘ng‘iroqlar</string>
+    <string name="calls_empty">Qo‘ng‘iroqlar tarixi shu yerda bo‘ladi</string>
+    <string name="typing">yozmoqda…</string>
+    <string name="online">onlayn</string>
+    <string name="last_seen">oxirgi marta %1$s</string>
+    <string name="message_hint">Xabar</string>
+    <string name="e2e_banner">Xabarlar shifrlangan</string>
+    <string name="version">Versiya</string>
+    <string name="server_url">Server</string>
+    <string name="target_android">Maqsad</string>
+</resources>

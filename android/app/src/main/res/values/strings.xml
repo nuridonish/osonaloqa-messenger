@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Осон Алоқа</string>
+    <string name="welcome_tagline">Мессенҷери зебо ва бехатари шумо. Паёмҳо, зангҳо ва статусҳо — ҳама дар як ҷо.</string>
+    <string name="welcome_continue">Идома додан</string>
+    <string name="settings">Танзимот</string>
+    <string name="enter_phone_title">Телефони шумо</string>
+    <string name="enter_phone_hint">Коди кишварро интихоб кунед ва рақами худро ворид кунед. Ҳамаи кишварҳои ҷаҳон дастгирӣ мешаванд.</string>
+    <string name="phone_number">Рақами телефон</string>
+    <string name="send_code">Фиристодани код</string>
+    <string name="search_country">Ҷустуҷӯи кишвар…</string>
+    <string name="otp_title">Тасдиқи рақам</string>
+    <string name="otp_sent_to">Мо код ба %1$s фиристодем. Онро ворид кунед.</string>
+    <string name="otp_code">Коди 6-рақама</string>
+    <string name="otp_dev_hint">Реҷаи таҳия: код 000000</string>
+    <string name="otp_verify">Тасдиқ кардан</string>
+    <string name="profile_info_title">Маълумоти профил</string>
+    <string name="profile_info_hint">Номи худро ворид кунед ва акс илова кунед</string>
+    <string name="profile_name">Номи шумо</string>
+    <string name="profile_next">Идома</string>
+    <string name="tab_chats">Чатҳо</string>
+    <string name="tab_status">Статус</string>
+    <string name="tab_communities">Ҷамоаҳо</string>
+    <string name="tab_calls">Зангҳо</string>
+    <string name="new_chat">Чати нав</string>
+    <string name="search">Ҷустуҷӯ…</string>
+    <string name="no_chats">Ҳанӯз чат нест. Чати аввалини худро оғоз кунед!</string>
+    <string name="no_messages">Паём нест</string>
+    <string name="status_e2e_note">Статусҳои шумо бо рамзгузории end-to-end ҳифз мешаванд</string>
+    <string name="no_statuses">Ҳанӯз статус нест</string>
+    <string name="new_text_status">Статуси матнӣ</string>
+    <string name="status_text">Матни статус…</string>
+    <string name="send">Фиристодан</string>
+    <string name="cancel">Бекор</string>
+    <string name="communities_title">Ҷамоаҳо</string>
+    <string name="communities_empty">Ҷамоаҳои шумо дар ин ҷо нишон дода мешаванд</string>
+    <string name="calls_title">Зангҳо</string>
+    <string name="calls_empty">Таърихи зангҳо дар ин ҷо хоҳад буд</string>
+    <string name="typing">менависад…</string>
+    <string name="online">онлайн</string>
+    <string name="last_seen">охирон бор дар %1$s</string>
+    <string name="message_hint">Паём</string>
+    <string name="e2e_banner">Паёмҳо рамзгузорӣ шудаанд</string>
+    <string name="version">Версия</string>
+    <string name="server_url">Сервер</string>
+    <string name="target_android">Ҳадаф</string>
+</resources>

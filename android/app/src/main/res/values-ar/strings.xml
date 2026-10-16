@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">أوسن ألاقا</string>
+    <string name="welcome_tagline">تطبيق المراسلة الجميل والآمن. الرسائل والمكالمات والحالات — كلها في مكان واحد.</string>
+    <string name="welcome_continue">متابعة</string>
+    <string name="settings">الإعدادات</string>
+    <string name="enter_phone_title">هاتفك</string>
+    <string name="enter_phone_hint">اختر رمز البلد وأدخل رقمك. جميع دول العالم مدعومة.</string>
+    <string name="phone_number">رقم الهاتف</string>
+    <string name="send_code">إرسال الرمز</string>
+    <string name="search_country">البحث عن بلد…</string>
+    <string name="otp_title">تأكيد الرقم</string>
+    <string name="otp_sent_to">أرسلنا رمزًا إلى %1$s. أدخله أدناه.</string>
+    <string name="otp_code">رمز من 6 أرقام</string>
+    <string name="otp_dev_hint">وضع التطوير: الرمز 000000</string>
+    <string name="otp_verify">تأكيد</string>
+    <string name="profile_info_title">معلومات الملف الشخصي</string>
+    <string name="profile_info_hint">أدخل اسمك وأضف صورة</string>
+    <string name="profile_name">اسمك</string>
+    <string name="profile_next">التالي</string>
+    <string name="tab_chats">المحادثات</string>
+    <string name="tab_status">الحالة</string>
+    <string name="tab_communities">المجتمعات</string>
+    <string name="tab_calls">المكالمات</string>
+    <string name="new_chat">محادثة جديدة</string>
+    <string name="search">بحث…</string>
+    <string name="no_chats">لا توجد محادثات بعد. ابدأ أول محادثة لك!</string>
+    <string name="no_messages">لا رسائل</string>
+    <string name="status_e2e_note">حالاتك محمية بالتشفير من طرف إلى طرف</string>
+    <string name="no_statuses">لا حالات بعد</string>
+    <string name="new_text_status">حالة نصية</string>
+    <string name="status_text">نص الحالة…</string>
+    <string name="send">إرسال</string>
+    <string name="cancel">إلغاء</string>
+    <string name="communities_title">المجتمعات</string>
+    <string name="communities_empty">ستظهر مجتمعاتك هنا</string>
+    <string name="calls_title">المكالمات</string>
+    <string name="calls_empty">سيكون سجل المكالمات هنا</string>
+    <string name="typing">يكتب…</string>
+    <string name="online">متصل</string>
+    <string name="last_seen">آخر ظهور %1$s</string>
+    <string name="message_hint">رسالة</string>
+    <string name="e2e_banner">الرسائل مشفرة</string>
+    <string name="version">الإصدار</string>
+    <string name="server_url">الخادم</string>
+    <string name="target_android">الهدف</string>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">آسان ارتباط</string>
+    <string name="welcome_tagline">پیام‌رسان زیبا و امن شما. پیام‌ها، تماس‌ها و وضعیت‌ها — همه در یک جا.</string>
+    <string name="welcome_continue">ادامه</string>
+    <string name="settings">تنظیمات</string>
+    <string name="enter_phone_title">تلفن شما</string>
+    <string name="enter_phone_hint">کد کشور را انتخاب و شماره خود را وارد کنید. همه کشورهای جهان پشتیبانی می‌شوند.</string>
+    <string name="phone_number">شماره تلفن</string>
+    <string name="send_code">ارسال کد</string>
+    <string name="search_country">جستجوی کشور…</string>
+    <string name="otp_title">تأیید شماره</string>
+    <string name="otp_sent_to">کد به %1$s ارسال شد. آن را وارد کنید.</string>
+    <string name="otp_code">کد ۶ رقمی</string>
+    <string name="otp_dev_hint">حالت توسعه: کد 000000</string>
+    <string name="otp_verify">تأیید</string>
+    <string name="profile_info_title">اطلاعات پروفایل</string>
+    <string name="profile_info_hint">نام خود را وارد و عکس اضافه کنید</string>
+    <string name="profile_name">نام شما</string>
+    <string name="profile_next">بعدی</string>
+    <string name="tab_chats">گفتگوها</string>
+    <string name="tab_status">وضعیت</string>
+    <string name="tab_communities">جامعه‌ها</string>
+    <string name="tab_calls">تماس‌ها</string>
+    <string name="new_chat">گفتگوی جدید</string>
+    <string name="search">جستجو…</string>
+    <string name="no_chats">هنوز گفتگویی نیست. اولین گفتگوی خود را شروع کنید!</string>
+    <string name="no_messages">پیامی نیست</string>
+    <string name="status_e2e_note">وضعیت‌های شما با رمزگذاری سرتاسری محافظت می‌شوند</string>
+    <string name="no_statuses">هنوز وضعیتی نیست</string>
+    <string name="new_text_status">وضعیت متنی</string>
+    <string name="status_text">متن وضعیت…</string>
+    <string name="send">ارسال</string>
+    <string name="cancel">لغو</string>
+    <string name="communities_title">جامعه‌ها</string>
+    <string name="communities_empty">جامعه‌های شما اینجا نمایش داده می‌شوند</string>
+    <string name="calls_title">تماس‌ها</string>
+    <string name="calls_empty">تاریخچه تماس‌ها اینجا خواهد بود</string>
+    <string name="typing">در حال نوشتن…</string>
+    <string name="online">آنلاین</string>
+    <string name="last_seen">آخرین بازدید %1$s</string>
+    <string name="message_hint">پیام</string>
+    <string name="e2e_banner">پیام‌ها رمزگذاری شده‌اند</string>
+    <string name="version">نسخه</string>
+    <string name="server_url">سرور</string>
+    <string name="target_android">هدف</string>
+</resources>

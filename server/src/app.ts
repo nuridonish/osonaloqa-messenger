@@ -5,6 +5,7 @@ import { config } from './config.js';
 import { authRoutes } from './routes/auth.js';
 import { userRoutes } from './routes/users.js';
 import { chatRoutes } from './routes/chats.js';
+import { statusRoutes } from './routes/statuses.js';
 import { wsRoutes } from './ws.js';
 import { allCountryCodes } from './phone.js';
 
@@ -21,6 +22,7 @@ export async function buildApp(opts?: { dbFile?: string; logger?: boolean }) {
   authRoutes(app, db);
   userRoutes(app, db);
   chatRoutes(app, db);
+  statusRoutes(app, db);
   wsRoutes(app, db);
 
   return { app, db };

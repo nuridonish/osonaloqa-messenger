@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Oson Aloqa</string>
+    <string name="welcome_tagline">Your beautiful and secure messenger. Messages, calls and statuses — all in one place.</string>
+    <string name="welcome_continue">Continue</string>
+    <string name="settings">Settings</string>
+    <string name="enter_phone_title">Your phone</string>
+    <string name="enter_phone_hint">Pick your country code and enter your number. All countries worldwide are supported.</string>
+    <string name="phone_number">Phone number</string>
+    <string name="send_code">Send code</string>
+    <string name="search_country">Search country…</string>
+    <string name="otp_title">Verify number</string>
+    <string name="otp_sent_to">We sent a code to %1$s. Enter it below.</string>
+    <string name="otp_code">6-digit code</string>
+    <string name="otp_dev_hint">Dev mode: code 000000</string>
+    <string name="otp_verify">Verify</string>
+    <string name="profile_info_title">Profile info</string>
+    <string name="profile_info_hint">Enter your name and add a photo</string>
+    <string name="profile_name">Your name</string>
+    <string name="profile_next">Next</string>
+    <string name="tab_chats">Chats</string>
+    <string name="tab_status">Status</string>
+    <string name="tab_communities">Communities</string>
+    <string name="tab_calls">Calls</string>
+    <string name="new_chat">New chat</string>
+    <string name="search">Search…</string>
+    <string name="no_chats">No chats yet. Start your first chat!</string>
+    <string name="no_messages">No messages</string>
+    <string name="status_e2e_note">Your statuses are protected with end-to-end encryption</string>
+    <string name="no_statuses">No statuses yet</string>
+    <string name="new_text_status">Text status</string>
+    <string name="status_text">Status text…</string>
+    <string name="send">Send</string>
+    <string name="cancel">Cancel</string>
+    <string name="communities_title">Communities</string>
+    <string name="communities_empty">Your communities will appear here</string>
+    <string name="calls_title">Calls</string>
+    <string name="calls_empty">Your call history will be here</string>
+    <string name="typing">typing…</string>
+    <string name="online">online</string>
+    <string name="last_seen">last seen at %1$s</string>
+    <string name="message_hint">Message</string>
+    <string name="e2e_banner">Messages are encrypted</string>
+    <string name="version">Version</string>
+    <string name="server_url">Server</string>
+    <string name="target_android">Target</string>
+</resources>
