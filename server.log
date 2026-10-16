@@ -1,0 +1,15 @@
+{"level":30,"time":1792179223996,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","msg":"Server listening at http://127.0.0.1:8080"}
+OSON ALOQA server: http://127.0.0.1:8080 (env=development)
+{"level":30,"time":1792179223998,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","msg":"Server listening at http://10.9.0.12:8080"}
+{"level":30,"time":1792179223998,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","msg":"Server listening at http://192.168.100.126:8080"}
+{"level":30,"time":1792179225486,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-1","req":{"method":"GET","url":"/health","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49589},"msg":"incoming request"}
+{"level":30,"time":1792179225498,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-1","res":{"statusCode":200},"responseTime":10.117699999999786,"msg":"request completed"}
+{"level":30,"time":1792179225782,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-2","req":{"method":"GET","url":"/","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49591},"msg":"incoming request"}
+{"level":30,"time":1792179225800,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-2","res":{"statusCode":200},"responseTime":17.898599999999533,"msg":"request completed"}
+{"level":30,"time":1792179237296,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-3","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49594},"msg":"incoming request"}
+[OTP] +992901234567 -> 000000
+{"level":30,"time":1792179237321,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-3","res":{"statusCode":200},"responseTime":23.75249999999869,"msg":"request completed"}
+{"level":30,"time":1792179237694,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-4","req":{"method":"POST","url":"/v1/auth/verify","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49596},"msg":"incoming request"}
+{"level":30,"time":1792179237706,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-4","res":{"statusCode":200},"responseTime":11.454999999998108,"msg":"request completed"}
+{"level":30,"time":1792179237996,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-5","req":{"method":"PATCH","url":"/v1/users/me","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49598},"msg":"incoming request"}
+{"level":30,"time":1792179238002,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-5","res":{"statusCode":200},"responseTime":6.293900000000576,"msg":"request completed"}
