@@ -44,4 +44,6 @@
     <string name="version">Version</string>
     <string name="server_url">Server</string>
     <string name="target_android">Target</string>
+    <string name="language">App language</string>
+    <string name="about_app">About the app</string>
 </resources>

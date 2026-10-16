@@ -46,6 +46,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +56,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import tj.osonaloqa.chat.Dependencies
 import tj.osonaloqa.chat.R
 import tj.osonaloqa.chat.data.local.MessageEntity
@@ -66,6 +68,7 @@ fun ChatScreen(chatId: String, onBack: () -> Unit) {
     val container = Dependencies.get()
     var text by remember { mutableStateOf("") }
     val listState = rememberLazyListState()
+    val scope = rememberCoroutineScope()
 
     val chat by container.chatRepository.observeChat(chatId).collectAsState(initial = null)
     val messages by container.chatRepository.observeMessages(chatId).collectAsState(initial = emptyList())
@@ -159,8 +162,9 @@ fun ChatScreen(chatId: String, onBack: () -> Unit) {
                             contentAlignment = Alignment.Center,
                         ) {
                             IconButton(onClick = {
-                                container.chatRepository.sendMessage(chatId, text.trim())
+                                val body = text.trim()
                                 text = ""
+                                scope.launch { container.chatRepository.sendMessage(chatId, body) }
                             }) {
                                 Icon(
                                     Icons.AutoMirrored.Filled.Send,

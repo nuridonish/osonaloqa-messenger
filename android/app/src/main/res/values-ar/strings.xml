@@ -44,4 +44,6 @@
     <string name="version">الإصدار</string>
     <string name="server_url">الخادم</string>
     <string name="target_android">الهدف</string>
+    <string name="language">لغة التطبيق</string>
+    <string name="about_app">حول التطبيق</string>
 </resources>

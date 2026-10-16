@@ -44,4 +44,6 @@
     <string name="version">نسخه</string>
     <string name="server_url">سرور</string>
     <string name="target_android">هدف</string>
+    <string name="language">زبان برنامه</string>
+    <string name="about_app">درباره برنامه</string>
 </resources>

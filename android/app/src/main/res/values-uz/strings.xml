@@ -44,4 +44,6 @@
     <string name="version">Versiya</string>
     <string name="server_url">Server</string>
     <string name="target_android">Maqsad</string>
+    <string name="language">Ilova tili</string>
+    <string name="about_app">Ilova haqida</string>
 </resources>

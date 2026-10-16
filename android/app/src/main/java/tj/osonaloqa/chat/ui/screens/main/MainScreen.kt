@@ -58,7 +58,7 @@ fun MainScreen(onOpenChat: (String) -> Unit, onOpenSettings: () -> Unit) {
 
     val tabs = listOf(
         MainTab(R.string.tab_chats, Icons.Outlined.Chat, Icons.Filled.Chat),
-        MainTab(R.string.tab_status, Icons.Outlined.Circle, Icons.Filled.Circle),
+        MainTab(R.string.tab_status, Icons.Outlined.Circle, Icons.Outlined.Circle),
         MainTab(R.string.tab_communities, Icons.Outlined.Groups, Icons.Filled.Groups),
         MainTab(R.string.tab_calls, Icons.Outlined.Call, Icons.Filled.Call),
     )

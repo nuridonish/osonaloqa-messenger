@@ -44,4 +44,6 @@
     <string name="version">Версия</string>
     <string name="server_url">Сервер</string>
     <string name="target_android">Цель</string>
+    <string name="language">Язык приложения</string>
+    <string name="about_app">О приложении</string>
 </resources>

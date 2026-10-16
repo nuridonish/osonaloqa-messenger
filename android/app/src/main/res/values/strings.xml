@@ -44,4 +44,6 @@
     <string name="version">Версия</string>
     <string name="server_url">Сервер</string>
     <string name="target_android">Ҳадаф</string>
+    <string name="language">Забони барнома</string>
+    <string name="about_app">Дар бораи барнома</string>
 </resources>
