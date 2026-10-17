@@ -46,4 +46,5 @@
     <string name="target_android">هدف</string>
     <string name="language">زبان برنامه</string>
     <string name="about_app">درباره برنامه</string>
+    <string name="parental_no_status_hint">Statuses hidden</string>
 </resources>

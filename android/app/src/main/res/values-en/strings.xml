@@ -143,7 +143,7 @@
     <string name="parental_lock_hint">Setting changes require confirmation</string>
     <string name="parental_hidden_chats">Hidden chats</string>
     <string name="parental_no_status">Disable statuses</string>
-    <string name="parental_no_status_hint">Others' statuses hidden</string>
+    <string name="parental_no_status_hint">Others\' statuses hidden</string>
     <string name="access_contrast">Increase contrast</string>
     <string name="access_contrast_hint">Main colors get darker</string>
     <string name="access_animation">Animation</string>
