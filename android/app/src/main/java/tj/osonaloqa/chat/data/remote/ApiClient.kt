@@ -89,7 +89,6 @@ data class DevicesRes(val devices: List<DeviceDto>)
 
 @kotlinx.serialization.Serializable
 data class SetAvatarReq(val avatar_url: String?)
-}
 
 @kotlinx.serialization.Serializable
 data class UpdateProfileReq(val name: String, val about: String, val username: String? = null)
