@@ -2,6 +2,7 @@ package tj.osonaloqa.chat.data.repo
 
 import tj.osonaloqa.chat.data.Session
 import tj.osonaloqa.chat.data.SessionManager
+import tj.osonaloqa.chat.data.isAuthed
 import tj.osonaloqa.chat.data.remote.OsonApi
 import tj.osonaloqa.chat.data.remote.RefreshReq
 import tj.osonaloqa.chat.data.remote.RequestOtpReq

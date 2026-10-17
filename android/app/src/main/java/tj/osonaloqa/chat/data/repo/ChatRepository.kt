@@ -69,7 +69,7 @@ class ChatRepository(
     }
 
     /** Даъват бо auth; агар 401 бошад — токенро аз нав гирифта такрор мекунад */
-    private suspend fun <T> authedCall(call: (auth: String) -> T): T? {
+    private suspend fun <T> authedCall(call: suspend (String) -> T): T? {
         var res = runCatching { call("Bearer ${sessions.current().accessToken}") }
         val code = (res.exceptionOrNull() as? retrofit2.HttpException)?.code()
         if (res.isFailure && code == 401) {

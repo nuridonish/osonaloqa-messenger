@@ -57,7 +57,7 @@ class SessionManager(private val context: Context) {
             p[nameKey] = s.name
             p[usernameKey] = s.username
             p[aboutKey] = s.about
-            p[issuedKey] = s.issuedAt
+            p[issuedKey] = s.issuedAt.toString()
         }
     }
 
