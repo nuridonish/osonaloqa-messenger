@@ -1,43 +1,30 @@
-{"level":30,"time":1792179223996,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","msg":"Server listening at http://127.0.0.1:8080"}
+{"level":30,"time":1792222836616,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","msg":"Server listening at http://127.0.0.1:8080"}
 OSON ALOQA server: http://127.0.0.1:8080 (env=development)
-{"level":30,"time":1792179223998,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","msg":"Server listening at http://10.9.0.12:8080"}
-{"level":30,"time":1792179223998,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","msg":"Server listening at http://192.168.100.126:8080"}
-{"level":30,"time":1792179225486,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-1","req":{"method":"GET","url":"/health","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49589},"msg":"incoming request"}
-{"level":30,"time":1792179225498,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-1","res":{"statusCode":200},"responseTime":10.117699999999786,"msg":"request completed"}
-{"level":30,"time":1792179225782,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-2","req":{"method":"GET","url":"/","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49591},"msg":"incoming request"}
-{"level":30,"time":1792179225800,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-2","res":{"statusCode":200},"responseTime":17.898599999999533,"msg":"request completed"}
-{"level":30,"time":1792179237296,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-3","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49594},"msg":"incoming request"}
-[OTP] +992901234567 -> 000000
-{"level":30,"time":1792179237321,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-3","res":{"statusCode":200},"responseTime":23.75249999999869,"msg":"request completed"}
-{"level":30,"time":1792179237694,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-4","req":{"method":"POST","url":"/v1/auth/verify","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49596},"msg":"incoming request"}
-{"level":30,"time":1792179237706,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-4","res":{"statusCode":200},"responseTime":11.454999999998108,"msg":"request completed"}
-{"level":30,"time":1792179237996,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-5","req":{"method":"PATCH","url":"/v1/users/me","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49598},"msg":"incoming request"}
-{"level":30,"time":1792179238002,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-5","res":{"statusCode":200},"responseTime":6.293900000000576,"msg":"request completed"}
-{"level":30,"time":1792179269968,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-6","req":{"method":"GET","url":"/health","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49605},"msg":"incoming request"}
-{"level":30,"time":1792179269970,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-6","res":{"statusCode":200},"responseTime":1.3646999999982654,"msg":"request completed"}
-{"level":30,"time":1792179270111,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-7","req":{"method":"GET","url":"/","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
-{"level":30,"time":1792179270149,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-7","res":{"statusCode":200},"responseTime":38.17370000000665,"msg":"request completed"}
-{"level":30,"time":1792179270686,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-8","req":{"method":"GET","url":"/favicon.ico","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
-{"level":30,"time":1792179270698,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-8","msg":"Route GET:/favicon.ico not found"}
-{"level":30,"time":1792179270699,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-8","res":{"statusCode":404},"responseTime":12.943100000004051,"msg":"request completed"}
-{"level":30,"time":1792179300078,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-9","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
-{"level":30,"time":1792179300082,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-9","res":{"statusCode":400},"responseTime":3.655899999997928,"msg":"request completed"}
-{"level":30,"time":1792179303410,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-a","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
-{"level":30,"time":1792179303413,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-a","res":{"statusCode":400},"responseTime":2.839700000011362,"msg":"request completed"}
-{"level":30,"time":1792179328376,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-b","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
-{"level":30,"time":1792179328378,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-b","res":{"statusCode":400},"responseTime":1.9300999999977648,"msg":"request completed"}
-{"level":30,"time":1792179329277,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-c","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
-{"level":30,"time":1792179329279,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-c","res":{"statusCode":400},"responseTime":1.6168999999936204,"msg":"request completed"}
-{"level":30,"time":1792179329458,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-d","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
-{"level":30,"time":1792179329460,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-d","res":{"statusCode":400},"responseTime":1.388200000001234,"msg":"request completed"}
-{"level":30,"time":1792179329683,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-e","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
-{"level":30,"time":1792179329687,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-e","res":{"statusCode":400},"responseTime":4.02390000000014,"msg":"request completed"}
-{"level":30,"time":1792179329899,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-f","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49609},"msg":"incoming request"}
-{"level":30,"time":1792179329901,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-f","res":{"statusCode":400},"responseTime":1.9386999999987893,"msg":"request completed"}
-{"level":30,"time":1792179443340,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-g","req":{"method":"GET","url":"/app-debug.apk","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":49630},"msg":"incoming request"}
-{"level":30,"time":1792179443347,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-g","res":{"statusCode":206},"responseTime":7.088499999983469,"msg":"request completed"}
-{"level":30,"time":1792179483872,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-h","req":{"method":"GET","url":"/app-debug.apk","host":"192.168.100.126:8080","remoteAddress":"192.168.100.126","remotePort":49631},"msg":"incoming request"}
-{"level":30,"time":1792179483879,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-h","res":{"statusCode":206},"responseTime":6.431999999971595,"msg":"request completed"}
-{"level":30,"time":1792179519881,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-i","req":{"method":"GET","url":"/favicon.ico","host":"127.0.0.1:8080","remoteAddress":"127.0.0.1","remotePort":49635},"msg":"incoming request"}
-{"level":30,"time":1792179519886,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-i","msg":"Route GET:/favicon.ico not found"}
-{"level":30,"time":1792179519887,"pid":12220,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-i","res":{"statusCode":404},"responseTime":4.790399999998044,"msg":"request completed"}
+{"level":30,"time":1792222836619,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","msg":"Server listening at http://10.9.0.12:8080"}
+{"level":30,"time":1792222836619,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","msg":"Server listening at http://192.168.100.126:8080"}
+{"level":30,"time":1792222838433,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-1","req":{"method":"GET","url":"/health","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":50819},"msg":"incoming request"}
+{"level":30,"time":1792222838448,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-1","res":{"statusCode":200},"responseTime":13.896700000000237,"msg":"request completed"}
+{"level":30,"time":1792222844705,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-2","req":{"method":"GET","url":"/health","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":50821},"msg":"incoming request"}
+{"level":30,"time":1792222844706,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-2","res":{"statusCode":200},"responseTime":0.8429000000014639,"msg":"request completed"}
+{"level":30,"time":1792222888118,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-3","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":60286},"msg":"incoming request"}
+[OTP] +79647271719 -> 000000
+{"level":30,"time":1792222888137,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-3","res":{"statusCode":200},"responseTime":18.74960000000283,"msg":"request completed"}
+{"level":30,"time":1792222888160,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-4","req":{"method":"POST","url":"/v1/auth/verify","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":60288},"msg":"incoming request"}
+{"level":30,"time":1792222888173,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-4","res":{"statusCode":200},"responseTime":13.645799999998417,"msg":"request completed"}
+{"level":30,"time":1792222888179,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-5","req":{"method":"POST","url":"/v1/auth/request-otp","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":60286},"msg":"incoming request"}
+[OTP] +79936271719 -> 000000
+{"level":30,"time":1792222888182,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-5","res":{"statusCode":200},"responseTime":3.17949999999837,"msg":"request completed"}
+{"level":30,"time":1792222888187,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-6","req":{"method":"POST","url":"/v1/auth/verify","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":60288},"msg":"incoming request"}
+{"level":30,"time":1792222888191,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-6","res":{"statusCode":200},"responseTime":3.8141000000032363,"msg":"request completed"}
+{"level":30,"time":1792222888198,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-7","req":{"method":"POST","url":"/v1/chats","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":60286},"msg":"incoming request"}
+{"level":30,"time":1792222888204,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-7","res":{"statusCode":200},"responseTime":6.392100000004575,"msg":"request completed"}
+{"level":30,"time":1792222888222,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-8","req":{"method":"GET","url":"/v1/ws","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":60290},"msg":"incoming request"}
+{"level":30,"time":1792222888766,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-9","req":{"method":"GET","url":"/v1/ws","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":60292},"msg":"incoming request"}
+{"level":30,"time":1792222888780,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-a","req":{"method":"GET","url":"/v1/chats/1ad5ea45-8c4a-4ce2-b6ee-61aa2199abcf/messages","host":"localhost:8080","remoteAddress":"127.0.0.1","remotePort":60286},"msg":"incoming request"}
+{"level":30,"time":1792222888784,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-a","res":{"statusCode":200},"responseTime":3.260600000001432,"msg":"request completed"}
+{"level":30,"time":1792223688432,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-b","req":{"method":"GET","url":"/v1/ws","host":"127.0.0.1:8080","remoteAddress":"127.0.0.1","remotePort":64443},"msg":"incoming request"}
+{"level":30,"time":1792223688447,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-c","req":{"method":"GET","url":"/v1/chats","host":"127.0.0.1:8080","remoteAddress":"127.0.0.1","remotePort":64444},"msg":"incoming request"}
+{"level":30,"time":1792223688449,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-c","res":{"statusCode":401},"responseTime":1.8001999999396503,"msg":"request completed"}
+{"level":30,"time":1792223688741,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-d","req":{"method":"GET","url":"/v1/ws","host":"127.0.0.1:8080","remoteAddress":"127.0.0.1","remotePort":64445},"msg":"incoming request"}
+{"level":30,"time":1792223688742,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-e","req":{"method":"GET","url":"/v1/chats","host":"127.0.0.1:8080","remoteAddress":"127.0.0.1","remotePort":64446},"msg":"incoming request"}
+{"level":30,"time":1792223688744,"pid":1868,"hostname":"WIN-JC1FMEBCBPS","reqId":"req-e","res":{"statusCode":401},"responseTime":1.8196000000461936,"msg":"request completed"}

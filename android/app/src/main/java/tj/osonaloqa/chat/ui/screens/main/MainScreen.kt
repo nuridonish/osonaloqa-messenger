@@ -49,7 +49,10 @@ fun MainScreen(onOpenChat: (String) -> Unit, onOpenSettings: () -> Unit) {
     var tab by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(Unit) {
-        container.chatRepository.startSync { container.sessionManager.current().accessToken }
+        container.chatRepository.startSync {
+            runCatching { container.authRepository.ensureFreshToken() }
+            container.sessionManager.current().accessToken
+        }
         container.chatRepository.refreshChats()
     }
 

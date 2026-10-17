@@ -18,6 +18,7 @@ data class Session(
     val name: String = "",
     val username: String = "",
     val about: String = "",
+    val issuedAt: Long = 0,
 )
 
 val Session.isAuthed: Boolean get() = accessToken.isNotEmpty()
@@ -30,6 +31,7 @@ class SessionManager(private val context: Context) {
     private val nameKey = stringPreferencesKey("name")
     private val usernameKey = stringPreferencesKey("username")
     private val aboutKey = stringPreferencesKey("about")
+    private val issuedKey = stringPreferencesKey("issued_at")
 
     val session: Flow<Session> = context.dataStore.data.map { p ->
         Session(
@@ -40,6 +42,7 @@ class SessionManager(private val context: Context) {
             name = p[nameKey] ?: "",
             username = p[usernameKey] ?: "",
             about = p[aboutKey] ?: "",
+            issuedAt = p[issuedKey]?.toLongOrNull() ?: 0,
         )
     }
 
@@ -54,6 +57,7 @@ class SessionManager(private val context: Context) {
             p[nameKey] = s.name
             p[usernameKey] = s.username
             p[aboutKey] = s.about
+            p[issuedKey] = s.issuedAt
         }
     }
 
@@ -69,6 +73,7 @@ class SessionManager(private val context: Context) {
         context.dataStore.edit { p ->
             p[accessKey] = access
             p[refreshKey] = refresh
+            p[issuedKey] = System.currentTimeMillis().toString()
         }
     }
 

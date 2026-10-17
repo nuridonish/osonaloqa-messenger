@@ -35,9 +35,18 @@ class AuthRepository(
                 name = user?.name ?: "",
                 username = user?.username ?: "",
                 about = user?.about ?: "",
+                issuedAt = System.currentTimeMillis(),
             )
         )
         res.isNew
+    }
+
+    /** Агар access-токен ба поёнрасидан наздик бошад, аз refresh мекунад */
+    suspend fun ensureFreshToken(): Boolean {
+        val s = sessions.current()
+        if (!s.isAuthed) return false
+        val age = System.currentTimeMillis() - s.issuedAt
+        return if (age > 12 * 60 * 1000L) refreshIfNeeded() else true
     }
 
     suspend fun refreshIfNeeded(): Boolean {

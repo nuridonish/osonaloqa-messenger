@@ -135,7 +135,15 @@ body { background: var(--bg2); color: var(--text); height: 100vh; overflow: hidd
       <div class="me"><span class="conn" id="conn"></span><span id="me-name"></span></div>
     </div>
     <div class="chatlist" id="chatlist"></div>
-    <div class="statusbar">Телефон бо +992... ворид шавед дар browser-и телефон низ</div>
+    <div class="statusbar">
+      <div class="row" style="margin-bottom:6px">
+        <input id="newchat-phone" placeholder="Рақам, масалан 901234567" inputmode="numeric"
+          style="flex:1;padding:8px 10px;border-radius:10px;border:1.5px solid var(--bg2);background:var(--bg2);color:var(--text);font-size:13px;outline:none">
+        <button id="btn-newchat" style="padding:8px 12px;border:none;border-radius:10px;background:var(--primary);color:#fff;font-weight:600;cursor:pointer">Чати нав</button>
+      </div>
+      <div id="newchat-err" style="color:var(--red);font-size:12px;margin-bottom:4px"></div>
+      Телефон дар реҷаи таҳия: OTP = 000000
+    </div>
   </div>
   <div class="chatarea">
     <div class="chatheader" id="chheader" style="visibility:hidden">
@@ -160,9 +168,11 @@ function show(id) {
 }
 
 async function api(method, path, body, auth = true) {
+  const headers = { 'content-type': 'application/json' };
+  if (auth && session) headers.authorization = 'Bearer ' + session.accessToken;
   const res = await fetch(path, {
     method,
-    headers: { 'content-type': 'application/json', ...(auth && session ? { authorization: 'Bearer ' + session.accessToken } : {}) },
+    headers,
     body: body ? JSON.stringify(body) : undefined,
   });
   return res.json();
@@ -341,6 +351,26 @@ $('btn-sendmsg').onclick = send;
 $('text').addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
 });
+
+$('btn-newchat').onclick = async () => {
+  const inp = $('newchat-phone');
+  const err = $('newchat-err');
+  if (!session) { err.textContent = 'Аввал шумо бояд ворид шавед (рақами худ + 000000)'; return; }
+  const raw = inp.value.replace(/\D/g, '');
+  err.textContent = '';
+  if (raw.length < 6) { err.textContent = 'Рақами нодуруст'; return; }
+  const e164 = sel.value + raw;
+  try {
+    const found = await api('POST', '/v1/users/lookup', { phones: [e164] });
+    if (!found.users || !found.users.length) {
+      err.textContent = 'Ин рақам ҳанӯз дар OSON ALOQA нест — аввал дар он дастгоҳ ворид шавед';
+      return;
+    }
+    const c = await api('POST', '/v1/chats', { type: 'private', peerId: found.users[0].id });
+    if (c.chatId) { inp.value = ''; await refreshChats(); openChat(c.chatId); }
+    else err.textContent = 'Хато: ' + (c.error || '?');
+  } catch (e) { err.textContent = 'Хатои шабака'; }
+};
 
 function send() {
   const t = $('text').value.trim();

@@ -73,6 +73,7 @@ CREATE TABLE IF NOT EXISTS statuses (
   user_id TEXT NOT NULL REFERENCES users(id),
   type TEXT NOT NULL DEFAULT 'text',
   body TEXT NOT NULL,
+  bg TEXT,
   created_at INTEGER NOT NULL,
   expires_at INTEGER NOT NULL
 );

@@ -23,7 +23,7 @@ class AppContainer(app: Application) {
 
     val authRepository = AuthRepository(api, sessionManager)
 
-    val chatRepository = ChatRepository(api, wsClient, db, sessionManager)
+    val chatRepository = ChatRepository(api, wsClient, db, sessionManager, authRepository)
 }
 
 object Dependencies {

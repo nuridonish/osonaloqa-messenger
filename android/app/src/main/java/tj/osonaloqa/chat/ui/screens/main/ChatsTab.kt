@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -40,6 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
 import tj.osonaloqa.chat.Dependencies
 import tj.osonaloqa.chat.R
 import tj.osonaloqa.chat.data.local.ChatEntity
@@ -50,8 +52,10 @@ import java.util.Locale
 @Composable
 fun ChatsTab(onOpenChat: (String) -> Unit) {
     val container = Dependencies.get()
+    val scope = rememberCoroutineScope()
     val chats by container.chatRepository.observeChats().collectAsState(initial = emptyList())
     var query by remember { mutableStateOf("") }
+    var showNewChat by remember { mutableStateOf(false) }
 
     val filtered = chats.filter {
         query.isBlank() || it.title.contains(query, true) || it.lastMessagePreview.contains(query, true)
@@ -60,7 +64,7 @@ fun ChatsTab(onOpenChat: (String) -> Unit) {
     Scaffold(
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                onClick = { },
+                onClick = { showNewChat = true },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 shape = RoundedCornerShape(18.dp),
@@ -96,6 +100,58 @@ fun ChatsTab(onOpenChat: (String) -> Unit) {
                 }
             }
         }
+    }
+
+    if (showNewChat) {
+        var phone by remember { mutableStateOf("") }
+        var error by remember { mutableStateOf<String?>(null) }
+        var busy by remember { mutableStateOf(false) }
+        androidx.compose.material3.AlertDialog(
+            onDismissRequest = { showNewChat = false },
+            title = { Text(stringResource(R.string.new_chat)) },
+            text = {
+                Column {
+                    OutlinedTextField(
+                        value = phone,
+                        onValueChange = { phone = it.filter { c -> c.isDigit() } },
+                        label = { Text(stringResource(R.string.phone_number)) },
+                        singleLine = true,
+                    )
+                    error?.let {
+                        Text(it, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodyMedium)
+                    }
+                }
+            },
+            confirmButton = {
+                androidx.compose.material3.TextButton(
+                    onClick = {
+                        if (phone.filter { c -> c.isDigit() }.length < 6) {
+                            error = "Рақами нодуруст"
+                            return@TextButton
+                        }
+                        busy = true
+                        error = null
+                        scope.launch {
+                            val e164 = "+992" + phone.filter { c -> c.isDigit() }
+                            val chatId = container.chatRepository.createChatByPhone(e164)
+                            busy = false
+                            if (chatId == null) {
+                                error = "Ин рақам ҳанӯз дар OSON ALOQA нест"
+                            } else {
+                                showNewChat = false
+                                onOpenChat(chatId)
+                            }
+                        }
+                    },
+                    enabled = !busy,
+                ) { Text(stringResource(R.string.send)) }
+            },
+            dismissButton = {
+                androidx.compose.material3.TextButton(onClick = { showNewChat = false }) {
+                    Text(stringResource(R.string.cancel))
+                }
+            },
+        )
     }
 }
 

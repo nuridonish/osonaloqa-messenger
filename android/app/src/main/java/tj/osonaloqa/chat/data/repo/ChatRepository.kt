@@ -16,6 +16,7 @@ import tj.osonaloqa.chat.data.remote.CreateChatReq
 import tj.osonaloqa.chat.data.remote.MessageDto
 import tj.osonaloqa.chat.data.remote.OsonApi
 import tj.osonaloqa.chat.data.remote.ReadReq
+import tj.osonaloqa.chat.data.remote.LookupReq
 import tj.osonaloqa.chat.data.remote.WsClient
 import tj.osonaloqa.chat.data.remote.WsMessage
 import java.util.UUID
@@ -31,6 +32,7 @@ class ChatRepository(
     private val ws: WsClient,
     private val db: AppDatabase,
     private val sessions: SessionManager,
+    private val authRepo: AuthRepository? = null,
 ) {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
 
@@ -55,8 +57,26 @@ class ChatRepository(
             }
         }
         scope.launch {
+            // Ҳар 10 дақиқа токенро нав мекунад, то WS ҳамеша бо токени корӣ пайваст шавад
+            while (true) {
+                kotlinx.coroutines.delay(10 * 60 * 1000L)
+                runCatching { authRepo?.ensureFreshToken() }
+            }
+        }
+        scope.launch {
             ws.events.collect { onWsEvent(it) }
         }
+    }
+
+    /** Даъват бо auth; агар 401 бошад — токенро аз нав гирифта такрор мекунад */
+    private suspend fun <T> authedCall(call: (auth: String) -> T): T? {
+        var res = runCatching { call("Bearer ${sessions.current().accessToken}") }
+        val code = (res.exceptionOrNull() as? retrofit2.HttpException)?.code()
+        if (res.isFailure && code == 401) {
+            runCatching { authRepo?.refreshIfNeeded() }
+            res = runCatching { call("Bearer ${sessions.current().accessToken}") }
+        }
+        return res.getOrNull()
     }
 
     private suspend fun baseUrlForWs(): String = tj.osonaloqa.chat.Dependencies.get().baseUrl
@@ -125,44 +145,45 @@ class ChatRepository(
     }
 
     suspend fun refreshChats() {
-        val auth = "Bearer ${sessions.current().accessToken}"
-        runCatching { api.chats(auth) }.onSuccess { res ->
+        authedCall { auth -> api.chats(auth) }?.let { res ->
             val me = sessions.current().userId
-            db.chatDao().upsertAll(
-                res.chats.map { c -> c.toEntity(myId = me) }
-            )
+            db.chatDao().upsertAll(res.chats.map { c -> c.toEntity(myId = me) })
         }
     }
 
     suspend fun openChat(chatId: String) {
-        val auth = "Bearer ${sessions.current().accessToken}"
         db.chatDao().markRead(chatId)
-        runCatching { api.messages(auth, chatId) }.onSuccess { res ->
-            val me = sessions.current().userId
-            db.messageDao().upsertAll(
-                res.messages.map { m ->
-                    val outgoing = m.senderId == me
-                    MessageEntity(
-                        id = m.id, chatId = chatId, senderId = m.senderId, seq = m.seq,
-                        clientId = m.clientId, type = m.msgType, body = m.body,
-                        createdAt = m.createdAt, outgoing = outgoing,
-                        state = if (outgoing) "sent" else "delivered",
-                    )
-                }
-            )
-            val last = res.messages.lastOrNull()
-            if (last != null) {
-                ws.send(WsMessage(type = "ack", messageId = last.id, state = "read"))
+        val res = authedCall { auth -> api.messages(auth, chatId, limit = 200) } ?: return
+        val me = sessions.current().userId
+        db.messageDao().upsertAll(
+            res.messages.map { m ->
+                val outgoing = m.senderId == me
+                MessageEntity(
+                    id = m.id, chatId = chatId, senderId = m.senderId, seq = m.seq,
+                    clientId = m.clientId, type = m.msgType, body = m.body,
+                    createdAt = m.createdAt, outgoing = outgoing,
+                    state = if (outgoing) "sent" else "delivered",
+                )
             }
+        )
+        val last = res.messages.lastOrNull()
+        if (last != null) {
+            ws.send(WsMessage(type = "ack", messageId = last.id, state = "read"))
         }
-        runCatching { api.markRead(auth, chatId, ReadReq(seq = db.messageDao().maxSeq(chatId) ?: 0)) }
+        val maxSeq = db.messageDao().maxSeq(chatId) ?: 0
+        if (maxSeq > 0) authedCall { auth -> api.markRead(auth, chatId, ReadReq(seq = maxSeq)) }
     }
 
     suspend fun createPrivateChat(peerId: String): String? {
-        val auth = "Bearer ${sessions.current().accessToken}"
-        return runCatching { api.createChat(auth, CreateChatReq(type = "private", peerId = peerId)).chatId }
-            .getOrNull()
-            ?.also { refreshChats() }
+        val id = authedCall { auth -> api.createChat(auth, CreateChatReq(type = "private", peerId = peerId)) }?.chatId
+        if (id != null) refreshChats()
+        return id
+    }
+
+    suspend fun createChatByPhone(e164: String): String? {
+        val found = authedCall { auth -> api.lookup(auth, LookupReq(listOf(e164))) }
+        val peer = found?.users?.firstOrNull() ?: return null
+        return createPrivateChat(peer.id)
     }
 
     suspend fun sendMessage(chatId: String, text: String) {
