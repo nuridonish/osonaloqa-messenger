@@ -268,8 +268,9 @@ fun ProfileScreen(onBack: () -> Unit) {
             Text(stringResource(R.string.save))
         }
         HorizontalDivider()
+        val deleteContact = stringResource(R.string.settings_delete_contact)
         SettingsNavRow(stringResource(R.string.settings_delete_account), subtitle = stringResource(R.string.settings_delete_hint)) {
-            msg = stringResource(R.string.settings_delete_contact)
+            msg = deleteContact
         }
         Spacer(Modifier.height(24.dp))
     }
