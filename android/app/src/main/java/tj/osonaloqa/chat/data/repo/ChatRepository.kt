@@ -54,7 +54,8 @@ class ChatRepository(
     suspend fun toggleStar(id: String) = db.messageDao().toggleStar(id)
 
     suspend fun markAllRead() {
-        val chats = db.chatDao().observeAll().first()        val auth = "Bearer ${sessions.current().accessToken}"
+        val chats = db.chatDao().observeAll().first()
+        val auth = "Bearer ${sessions.current().accessToken}"
         for (c in chats) {
             db.chatDao().markRead(c.id)
             if (c.lastSeq > 0) {
