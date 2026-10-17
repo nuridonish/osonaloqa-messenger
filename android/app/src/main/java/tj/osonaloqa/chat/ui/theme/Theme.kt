@@ -43,11 +43,22 @@ private val DarkColors = darkColorScheme(
 @Composable
 fun OsonAloqaTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    fontScale: Float = 1f,
     content: @Composable () -> Unit,
 ) {
+    val typography = if (fontScale != 1f) {
+        val t = OsonTypography
+        Typography(
+            headlineMedium = t.headlineMedium.copy(fontSize = t.headlineMedium.fontSize * fontScale),
+            titleLarge = t.titleLarge.copy(fontSize = t.titleLarge.fontSize * fontScale),
+            titleMedium = t.titleMedium.copy(fontSize = t.titleMedium.fontSize * fontScale),
+            bodyLarge = t.bodyLarge.copy(fontSize = t.bodyLarge.fontSize * fontScale),
+            bodyMedium = t.bodyMedium.copy(fontSize = t.bodyMedium.fontSize * fontScale),
+        )
+    } else OsonTypography
     MaterialTheme(
         colorScheme = if (darkTheme) DarkColors else LightColors,
-        typography = OsonTypography,
+        typography = typography,
         shapes = OsonShapes,
         content = content,
     )

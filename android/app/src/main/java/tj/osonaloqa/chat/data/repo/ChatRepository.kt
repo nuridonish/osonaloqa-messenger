@@ -45,6 +45,42 @@ class ChatRepository(
     fun observeChats(): Flow<List<ChatEntity>> = db.chatDao().observeAll()
     fun observeChat(id: String): Flow<ChatEntity?> = db.chatDao().observe(id)
     fun observeMessages(chatId: String): Flow<List<MessageEntity>> = db.messageDao().observeChat(chatId)
+    fun observeStarred(): Flow<List<MessageEntity>> = db.messageDao().observeStarred()
+    fun observeRecentCalls(): Flow<List<RecentCallEntity>> = db.recentCallDao().observeAll()
+
+    suspend fun toggleStar(id: String) = db.messageDao().toggleStar(id)
+
+    suspend fun markAllRead() {
+        val auth = "Bearer ${sessions.current().accessToken}"
+        val chats = observeChats().let { f -> kotlinx.coroutines.flow.first(f) }
+        for (c in chats) {
+            db.chatDao().markRead(c.id)
+            if (c.lastSeq > 0) {
+                runCatching { api.markRead(auth, c.id, ReadReq(seq = c.lastSeq)) }
+            }
+        }
+    }
+
+    suspend fun addRecentCall(name: String, phone: String, outgoing: Boolean) {
+        db.recentCallDao().add(
+            RecentCallEntity(id = java.util.UUID.randomUUID().toString(), name = name, phone = phone, time = System.currentTimeMillis(), outgoing = outgoing)
+        )
+    }
+
+    suspend fun listUsers(): List<tj.osonaloqa.chat.data.remote.UserDto>? =
+        authedCall { auth -> api.usersList(auth) }?.users
+
+    suspend fun listDevices(): List<tj.osonaloqa.chat.data.remote.DeviceDto>? =
+        authedCall { auth -> api.devices(auth) }?.devices
+
+    suspend fun removeDevice(id: String): Boolean =
+        authedCall { auth -> api.removeDevice(auth, id) } != null
+
+    suspend fun uploadMedia(bytes: ByteArray, mime: String): tj.osonaloqa.chat.data.remote.MediaRes? =
+        authedCall { auth -> api.uploadMedia(auth, bytes, mime) }
+
+    suspend fun setAvatar(url: String?): Boolean =
+        authedCall { auth -> api.setAvatar(auth, tj.osonaloqa.chat.data.remote.SetAvatarReq(avatar_url = url)) } != null
 
     fun startSync(tokenProvider: suspend () -> String) {
         scope.launch {
@@ -186,23 +222,23 @@ class ChatRepository(
         return createPrivateChat(peer.id)
     }
 
-    suspend fun sendMessage(chatId: String, text: String) {
+    suspend fun sendMessage(chatId: String, text: String, msgType: String = "text") {
         val me = sessions.current().userId
-        val clientId = UUID.randomUUID().toString()
+        val clientId = java.util.UUID.randomUUID().toString()
         val entity = MessageEntity(
             id = "local-$clientId",
             chatId = chatId,
             senderId = me,
             seq = (db.messageDao().maxSeq(chatId) ?: 0) + 1,
             clientId = clientId,
-            type = "text",
+            type = msgType,
             body = text,
             createdAt = System.currentTimeMillis(),
             outgoing = true,
             state = "pending",
         )
         db.messageDao().upsert(entity)
-        val payload = WsMessage(type = "message.send", clientId = clientId, chatId = chatId, body = text)
+        val payload = WsMessage(type = "message.send", clientId = clientId, chatId = chatId, msgType = msgType, body = text)
         val ok = ws.send(payload)
         if (!ok) {
             scope.launch {
@@ -229,6 +265,7 @@ class ChatRepository(
         peerId = peer?.id,
         peerPhone = peer?.phone,
         peerName = peer?.name,
+        peerAvatar = peer?.avatarUrl,
         peerOnline = peer?.online == true,
         peerLastSeen = peer?.lastSeenAt ?: 0,
         lastSeq = lastSeq,

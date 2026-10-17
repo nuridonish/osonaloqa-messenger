@@ -1,11 +1,14 @@
 package tj.osonaloqa.chat.ui.screens.main
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.Dialpad
 import androidx.compose.material.icons.filled.Groups
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.Call
 import androidx.compose.material.icons.outlined.Chat
@@ -13,6 +16,8 @@ import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,11 +33,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import kotlinx.coroutines.launch
 import tj.osonaloqa.chat.Dependencies
 import tj.osonaloqa.chat.R
 
@@ -44,9 +52,11 @@ private data class MainTab(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(onOpenChat: (String) -> Unit, onOpenSettings: () -> Unit) {
+fun MainScreen(onOpenChat: (String) -> Unit, onOpenSettings: () -> Unit, onOpenRoute: (String) -> Unit) {
     val container = Dependencies.get()
     var tab by remember { mutableIntStateOf(0) }
+    var menuOpen by remember { mutableStateOf(false) }
+    val scope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         container.chatRepository.startSync {
@@ -77,6 +87,48 @@ fun MainScreen(onOpenChat: (String) -> Unit, onOpenSettings: () -> Unit) {
                     )
                 },
                 actions = {
+                    if (tab == 0) {
+                        IconButton(onClick = { menuOpen = true }) {
+                            Icon(Icons.Filled.MoreVert, contentDescription = null)
+                        }
+                        DropdownMenu(expanded = menuOpen, onDismissRequest = { menuOpen = false }) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.menu_new_group)) },
+                                onClick = { menuOpen = false; onOpenRoute("group/new") },
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.menu_broadcast)) },
+                                onClick = { menuOpen = false; onOpenRoute("broadcast") },
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.menu_devices)) },
+                                onClick = { menuOpen = false; onOpenRoute("devices") },
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.menu_starred)) },
+                                onClick = { menuOpen = false; onOpenRoute("starred") },
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.menu_read_all)) },
+                                onClick = {
+                                    menuOpen = false
+                                    scope.launch { runCatching { container.chatRepository.markAllRead() } }
+                                },
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.settings)) },
+                                onClick = { menuOpen = false; onOpenSettings() },
+                            )
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.menu_switch_account)) },
+                                onClick = { menuOpen = false; onOpenRoute("account/switch") },
+                            )
+                        }
+                    } else if (tab == 3) {
+                        IconButton(onClick = { onOpenRoute("calls/dialer") }) {
+                            Icon(Icons.Filled.Dialpad, contentDescription = null)
+                        }
+                    }
                     IconButton(onClick = onOpenSettings) {
                         Icon(Icons.Filled.Settings, contentDescription = stringResource(R.string.settings))
                     }
@@ -85,7 +137,10 @@ fun MainScreen(onOpenChat: (String) -> Unit, onOpenSettings: () -> Unit) {
             )
         },
         bottomBar = {
-            NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
+            NavigationBar(
+                containerColor = MaterialTheme.colorScheme.surface,
+                modifier = Modifier.navigationBarsPadding(),
+            ) {
                 tabs.forEachIndexed { i, t ->
                     NavigationBarItem(
                         selected = tab == i,
@@ -106,9 +161,9 @@ fun MainScreen(onOpenChat: (String) -> Unit, onOpenSettings: () -> Unit) {
         Box(Modifier.padding(pad)) {
             when (tab) {
                 0 -> ChatsTab(onOpenChat = onOpenChat)
-                1 -> StatusTab()
+                1 -> StatusTab(onOpenViewer = { onOpenRoute("status/viewer") })
                 2 -> CommunitiesTab()
-                3 -> CallsTab()
+                3 -> CallsTab(onOpenDialer = { onOpenRoute("calls/dialer") })
             }
         }
     }

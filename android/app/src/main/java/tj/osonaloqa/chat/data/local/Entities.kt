@@ -12,6 +12,7 @@ data class ChatEntity(
     val peerId: String?,
     val peerPhone: String?,
     val peerName: String?,
+    val peerAvatar: String?,
     val peerOnline: Boolean,
     val peerLastSeen: Long,
     val lastSeq: Long,
@@ -36,4 +37,14 @@ data class MessageEntity(
     val createdAt: Long,
     val outgoing: Boolean,
     val state: String,
+    val starred: Boolean = false,
+)
+
+@Entity(tableName = "recent_calls")
+data class RecentCallEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val phone: String,
+    val time: Long,
+    val outgoing: Boolean,
 )

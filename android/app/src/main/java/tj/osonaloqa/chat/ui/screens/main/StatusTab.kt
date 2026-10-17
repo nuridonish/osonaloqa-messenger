@@ -46,7 +46,7 @@ import tj.osonaloqa.chat.R
 import tj.osonaloqa.chat.data.remote.CreateStatusReq
 
 @Composable
-fun StatusTab() {
+fun StatusTab(onOpenViewer: () -> Unit = {}) {
     val container = Dependencies.get()
     val scope = rememberCoroutineScope()
     var statuses by remember { mutableStateOf<List<tj.osonaloqa.chat.data.remote.StatusDto>>(emptyList()) }
@@ -96,7 +96,7 @@ fun StatusTab() {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { }
+                                .clickable { onOpenViewer() }
                                 .padding(horizontal = 16.dp, vertical = 10.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {

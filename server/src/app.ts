@@ -7,6 +7,8 @@ import { authRoutes } from './routes/auth.js';
 import { userRoutes } from './routes/users.js';
 import { chatRoutes } from './routes/chats.js';
 import { statusRoutes } from './routes/statuses.js';
+import { mediaRoutes } from './routes/media.js';
+import { accountRoutes } from './routes/account.js';
 import { wsRoutes } from './ws.js';
 import { allCountryCodes } from './phone.js';
 import { existsSync } from 'node:fs';
@@ -26,11 +28,15 @@ export async function buildApp(opts?: { dbFile?: string; logger?: boolean }) {
   if (existsSync(publicDir)) {
     await app.register(fastifyStatic, { root: publicDir });
   }
+  const mediaDir = fileURLToPath(new URL('../data/media', import.meta.url));
+  await app.register(fastifyStatic, { root: mediaDir, prefix: '/media/', decorateReply: false });
 
   authRoutes(app, db);
   userRoutes(app, db);
   chatRoutes(app, db);
   statusRoutes(app, db);
+  mediaRoutes(app, db);
+  accountRoutes(app, db);
   wsRoutes(app, db);
 
   return { app, db };

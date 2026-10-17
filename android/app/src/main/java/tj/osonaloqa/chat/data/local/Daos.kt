@@ -58,4 +58,22 @@ interface MessageDao {
 
     @Query("SELECT * FROM messages WHERE clientId = :clientId LIMIT 1")
     suspend fun byClientId(clientId: String): MessageEntity?
+
+    @Query("UPDATE messages SET starred = NOT starred WHERE id = :id")
+    suspend fun toggleStar(id: String)
+
+    @Query("SELECT * FROM messages WHERE starred = 1 ORDER BY createdAt DESC")
+    fun observeStarred(): Flow<List<MessageEntity>>
+}
+
+@Dao
+interface RecentCallDao {
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun add(call: RecentCallEntity)
+
+    @Query("SELECT * FROM recent_calls ORDER BY time DESC LIMIT 100")
+    fun observeAll(): Flow<List<RecentCallEntity>>
+
+    @Query("DELETE FROM recent_calls")
+    suspend fun clear()
 }

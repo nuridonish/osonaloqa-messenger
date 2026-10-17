@@ -48,6 +48,47 @@ interface OsonApi {
         @retrofit2.http.Path("chatId") chatId: String,
         @retrofit2.http.Body body: ReadReq,
     ): Map<String, Boolean>
+
+    @retrofit2.http.GET("v1/users/list")
+    suspend fun usersList(@retrofit2.http.Header("Authorization") auth: String): UserListRes
+
+    @retrofit2.http.GET("v1/devices")
+    suspend fun devices(@retrofit2.http.Header("Authorization") auth: String): DevicesRes
+
+    @retrofit2.http.DELETE("v1/devices/{id}")
+    suspend fun removeDevice(@retrofit2.http.Header("Authorization") auth: String, @retrofit2.http.Path("id") id: String): Map<String, Boolean>
+
+    @retrofit2.http.PATCH("v1/users/avatar")
+    suspend fun setAvatar(@retrofit2.http.Header("Authorization") auth: String, @retrofit2.http.Body body: SetAvatarReq): Map<String, Boolean>
+
+    @retrofit2.http.POST("v1/media")
+    suspend fun uploadMediaRaw(
+        @retrofit2.http.Header("Authorization") auth: String,
+        @retrofit2.http.Body body: okhttp3.RequestBody,
+    ): MediaRes
+}
+
+fun OsonApi.uploadMedia(auth: String, bytes: ByteArray, mime: String): MediaRes {
+    val body = okhttp3.RequestBody.create(null, bytes, 0, bytes.size)
+    return uploadMediaRaw(auth, body)
+}
+
+
+
+@kotlinx.serialization.Serializable
+data class MediaRes(val url: String, val size: Long = 0, val mime: String = "", val sha256: String? = null)
+
+@kotlinx.serialization.Serializable
+data class UserListRes(val users: List<UserDto>)
+
+@kotlinx.serialization.Serializable
+data class DeviceDto(val id: String, val device_name: String = "", val created_at: Long = 0, val current: Boolean = false)
+
+@kotlinx.serialization.Serializable
+data class DevicesRes(val devices: List<DeviceDto>)
+
+@kotlinx.serialization.Serializable
+data class SetAvatarReq(val avatar_url: String?)
 }
 
 @kotlinx.serialization.Serializable

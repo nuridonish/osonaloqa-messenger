@@ -2,6 +2,7 @@ package tj.osonaloqa.chat
 
 import android.app.Application
 import android.content.Context
+import tj.osonaloqa.chat.data.AppPrefs
 import tj.osonaloqa.chat.data.SessionManager
 import tj.osonaloqa.chat.data.local.AppDatabase
 import tj.osonaloqa.chat.data.remote.ApiClient
@@ -12,6 +13,7 @@ import tj.osonaloqa.chat.data.repo.ChatRepository
 
 class AppContainer(app: Application) {
     val sessionManager = SessionManager(app)
+    val prefs = AppPrefs(app)
     val okHttp = ApiClient.okHttp()
     val wsClient = WsClient(okHttp)
 

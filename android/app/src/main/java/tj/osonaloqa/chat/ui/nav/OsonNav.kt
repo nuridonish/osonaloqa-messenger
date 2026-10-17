@@ -9,14 +9,29 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import tj.osonaloqa.chat.Dependencies
-import tj.osonaloqa.chat.data.isAuthed
 import tj.osonaloqa.chat.ui.screens.auth.OtpScreen
 import tj.osonaloqa.chat.ui.screens.auth.PhoneScreen
 import tj.osonaloqa.chat.ui.screens.auth.ProfileSetupScreen
 import tj.osonaloqa.chat.ui.screens.auth.WelcomeScreen
 import tj.osonaloqa.chat.ui.screens.chat.ChatScreen
+import tj.osonaloqa.chat.ui.screens.extra.BroadcastScreen
+import tj.osonaloqa.chat.ui.screens.extra.DevicesScreen
+import tj.osonaloqa.chat.ui.screens.extra.GroupScreen
+import tj.osonaloqa.chat.ui.screens.extra.StarredScreen
+import tj.osonaloqa.chat.ui.screens.extra.StatusViewerScreen
 import tj.osonaloqa.chat.ui.screens.main.MainScreen
-import tj.osonaloqa.chat.ui.screens.settings.SettingsScreen
+import tj.osonaloqa.chat.ui.screens.settings.AboutScreen
+import tj.osonaloqa.chat.ui.screens.settings.AccessibilityScreen
+import tj.osonaloqa.chat.ui.screens.settings.ChatsSettingsScreen
+import tj.osonaloqa.chat.ui.screens.settings.DataStorageScreen
+import tj.osonaloqa.chat.ui.screens.settings.HelpScreen
+import tj.osonaloqa.chat.ui.screens.settings.LanguageScreen
+import tj.osonaloqa.chat.ui.screens.settings.ListsScreen
+import tj.osonaloqa.chat.ui.screens.settings.NotificationsScreen
+import tj.osonaloqa.chat.ui.screens.settings.ParentalScreen
+import tj.osonaloqa.chat.ui.screens.settings.PrivacyScreen
+import tj.osonaloqa.chat.ui.screens.settings.ProfileScreen
+import tj.osonaloqa.chat.ui.screens.settings.SettingsTreeScreen
 
 object Routes {
     const val SPLASH = "splash"
@@ -80,6 +95,7 @@ fun OsonApp() {
             MainScreen(
                 onOpenChat = { chatId -> nav.navigate(Routes.chat(chatId)) },
                 onOpenSettings = { nav.navigate(Routes.SETTINGS) },
+                onOpenRoute = { route -> nav.navigate(route) },
             )
         }
         composable(Routes.CHAT, arguments = listOf(navArgument("chatId") { defaultValue = "" })) { entry ->
@@ -90,7 +106,36 @@ fun OsonApp() {
             )
         }
         composable(Routes.SETTINGS) {
-            SettingsScreen(onBack = { nav.popBackStack() })
+            SettingsTreeScreen(onBack = { nav.popBackStack() }, onOpenRoute = { nav.navigate(it) })
+        }
+        composable("group/new") {
+            GroupScreen(onBack = { nav.popBackStack() }, onCreated = { chatId ->
+                nav.navigate(Routes.chat(chatId)) { popUpTo("group/new") { inclusive = true } }
+            })
+        }
+        composable("broadcast") {
+            BroadcastScreen(onBack = { nav.popBackStack() }, onDone = { nav.popBackStack() })
+        }
+        composable("starred") { StarredScreen(onBack = { nav.popBackStack() }) }
+        composable("devices") { DevicesScreen(onBack = { nav.popBackStack() }) }
+        composable("status/viewer") { StatusViewerScreen(onBack = { nav.popBackStack() }) }
+        composable("calls/dialer") { tj.osonaloqa.chat.ui.screens.extra.DialerScreen(onBack = { nav.popBackStack() }) }
+        composable("settings/profile") { ProfileScreen(onBack = { nav.popBackStack() }) }
+        composable("settings/privacy") { PrivacyScreen(onBack = { nav.popBackStack() }) }
+        composable("settings/lists") { ListsScreen(onBack = { nav.popBackStack() }) }
+        composable("settings/chats") { ChatsSettingsScreen(onBack = { nav.popBackStack() }) }
+        composable("settings/notifications") { NotificationsScreen(onBack = { nav.popBackStack() }) }
+        composable("settings/data") { DataStorageScreen(onBack = { nav.popBackStack() }) }
+        composable("settings/parental") { ParentalScreen(onBack = { nav.popBackStack() }) }
+        composable("settings/accessibility") { AccessibilityScreen(onBack = { nav.popBackStack() }) }
+        composable("settings/language") { LanguageScreen(onBack = { nav.popBackStack() }) }
+        composable("settings/help") { HelpScreen(onBack = { nav.popBackStack() }, onOpenRoute = { nav.navigate(it) }) }
+        composable("settings/about") { AboutScreen(onBack = { nav.popBackStack() }) }
+        composable("account/switch") {
+            tj.osonaloqa.chat.ui.screens.extra.AccountSwitchScreen(
+                onBack = { nav.popBackStack() },
+                onSwitched = { nav.navigate(Routes.MAIN) { popUpTo(0) } },
+            )
         }
     }
 }
