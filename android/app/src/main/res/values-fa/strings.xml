@@ -47,4 +47,6 @@
     <string name="language">زبان برنامه</string>
     <string name="about_app">درباره برنامه</string>
     <string name="parental_no_status_hint">Statuses hidden</string>
+    <string name="settings_help">کمک و بازخورد</string>
+    <string name="profile_avatar_hint">به زودی می‌توانید عکس اضافه کنید</string>
 </resources>

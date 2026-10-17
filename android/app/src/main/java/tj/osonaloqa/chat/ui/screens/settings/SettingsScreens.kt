@@ -89,7 +89,7 @@ fun SubScreen(title: String, onBack: () -> Unit, content: @Composable () -> Unit
 }
 
 @Composable
-internal fun SettingsToggleRow(label: String, checked: Boolean, onChange: (Boolean) -> Unit, subtitle: String? = null) {
+internal fun SettingsToggleRow(label: String, checked: Boolean, subtitle: String? = null, onChange: (Boolean) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -106,7 +106,7 @@ internal fun SettingsToggleRow(label: String, checked: Boolean, onChange: (Boole
 }
 
 @Composable
-internal fun SettingsNavRow(label: String, icon: ImageVector? = null, onClick: () -> Unit = {}, subtitle: String? = null) {
+internal fun SettingsNavRow(label: String, icon: ImageVector? = null, subtitle: String? = null, onClick: () -> Unit = {}) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -209,6 +209,7 @@ fun ProfileScreen(onBack: () -> Unit) {
     var loaded by remember { mutableStateOf(false) }
     var saving by remember { mutableStateOf(false) }
     var msg by remember { mutableStateOf<String?>(null) }
+    val saved = stringResource(R.string.save)
 
     LaunchedEffect(session) {
         if (session != null && !loaded) {
@@ -254,7 +255,7 @@ fun ProfileScreen(onBack: () -> Unit) {
                 saving = true
                 scope.launch {
                     container.authRepository.updateProfile(name = name.trim(), about = about.trim(), username = null)
-                        .onSuccess { msg = "✓ ${stringResource(R.string.save)}" }
+                        .onSuccess { msg = saved }
                     saving = false
                 }
             },

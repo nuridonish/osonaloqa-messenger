@@ -168,4 +168,6 @@
         <string name="msg_copy">Copy</string>
         <string name="msg_video">Video</string>
         <string name="tab_groups">Groups</string>
+    <string name="settings_help">Yordam va fikr-mulohaza</string>
+    <string name="profile_avatar_hint">Rasm tez orada qo‘shiladi</string>
 </resources>

@@ -167,4 +167,6 @@
     <string name="msg_copy">Копировать</string>
     <string name="msg_video">Видео</string>
     <string name="tab_groups">Группы</string>
+    <string name="settings_help">Помощь и отзывы</string>
+    <string name="profile_avatar_hint">Фото скоро можно будет добавить</string>
 </resources>

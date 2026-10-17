@@ -167,4 +167,6 @@
     <string name="msg_copy">Нусха бардоштан</string>
     <string name="msg_video">Видео</string>
     <string name="tab_groups">Гурӯҳҳо</string>
+    <string name="settings_help">Кумак ва фикру мулоҳиза</string>
+    <string name="profile_avatar_hint">Акс зуд илова мешавад</string>
 </resources>

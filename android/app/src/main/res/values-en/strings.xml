@@ -167,4 +167,6 @@
     <string name="msg_copy">Copy</string>
     <string name="msg_video">Video</string>
     <string name="tab_groups">Groups</string>
+    <string name="settings_help">Help &amp; feedback</string>
+    <string name="profile_avatar_hint">Photo can be added soon</string>
 </resources>
