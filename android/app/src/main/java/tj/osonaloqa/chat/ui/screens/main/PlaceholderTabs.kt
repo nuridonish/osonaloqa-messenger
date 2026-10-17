@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import tj.osonaloqa.chat.Dependencies
 import tj.osonaloqa.chat.R
 
 @Deprecated(" Replaced by CommunitiesTab.kt", ReplaceWith("CommunitiesTab"))

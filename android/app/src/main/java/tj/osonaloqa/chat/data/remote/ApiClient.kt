@@ -68,7 +68,7 @@ interface OsonApi {
     ): MediaRes
 }
 
-fun OsonApi.uploadMedia(auth: String, bytes: ByteArray, mime: String): MediaRes {
+suspend fun OsonApi.uploadMedia(auth: String, bytes: ByteArray, mime: String): MediaRes {
     val body = okhttp3.RequestBody.create(null, bytes, 0, bytes.size)
     return uploadMediaRaw(auth, body)
 }

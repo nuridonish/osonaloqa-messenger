@@ -11,6 +11,7 @@ import tj.osonaloqa.chat.data.SessionManager
 import tj.osonaloqa.chat.data.local.AppDatabase
 import tj.osonaloqa.chat.data.local.ChatEntity
 import tj.osonaloqa.chat.data.local.MessageEntity
+import tj.osonaloqa.chat.data.local.RecentCallEntity
 import tj.osonaloqa.chat.data.remote.ChatDto
 import tj.osonaloqa.chat.data.remote.CreateChatReq
 import tj.osonaloqa.chat.data.remote.MessageDto
@@ -51,8 +52,8 @@ class ChatRepository(
     suspend fun toggleStar(id: String) = db.messageDao().toggleStar(id)
 
     suspend fun markAllRead() {
+        val chats = kotlinx.coroutines.flow.first(db.chatDao().observeAll())
         val auth = "Bearer ${sessions.current().accessToken}"
-        val chats = observeChats().let { f -> kotlinx.coroutines.flow.first(f) }
         for (c in chats) {
             db.chatDao().markRead(c.id)
             if (c.lastSeq > 0) {

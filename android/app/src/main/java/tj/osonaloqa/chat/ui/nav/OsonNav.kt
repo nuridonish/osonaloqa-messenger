@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import tj.osonaloqa.chat.Dependencies
+import tj.osonaloqa.chat.data.isAuthed
 import tj.osonaloqa.chat.ui.screens.auth.OtpScreen
 import tj.osonaloqa.chat.ui.screens.auth.PhoneScreen
 import tj.osonaloqa.chat.ui.screens.auth.ProfileSetupScreen

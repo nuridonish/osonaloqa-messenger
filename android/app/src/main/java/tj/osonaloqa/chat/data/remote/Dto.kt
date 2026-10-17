@@ -12,6 +12,7 @@ data class UserDto(
     val about: String = "",
     val username: String? = null,
     @SerialName("avatar_url") val avatarUrl: String? = null,
+    val online: Boolean = false,
 )
 
 @Serializable

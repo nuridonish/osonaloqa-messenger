@@ -63,6 +63,7 @@ import java.util.Calendar
 fun DialerScreen(onBack: () -> Unit) {
     val context = LocalContext.current
     val container = Dependencies.get()
+    val scope = androidx.compose.runtime.rememberCoroutineScope()
     var tab by remember { mutableIntStateOf(0) }
     var number by remember { mutableStateOf("") }
     var contacts by remember { mutableStateOf<List<Pair<String, String>>>(emptyList()) }
@@ -153,8 +154,8 @@ fun DialerScreen(onBack: () -> Unit) {
                         Spacer(Modifier.width(72.dp))
                         FloatingActionButton(
                             onClick = {
-                                if (number.isNotBlank()) {
-                                    container.chatRepository.addRecentCall("", number, outgoing = true)
+                                    if (number.isNotBlank()) {
+                                    scope.launch { container.chatRepository.addRecentCall("", number, outgoing = true) }
                                     context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number)))
                                 }
                             },
@@ -188,7 +189,7 @@ fun DialerScreen(onBack: () -> Unit) {
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .clickable {
-                                        container.chatRepository.addRecentCall(name, phone, outgoing = true)
+                                        scope.launch { container.chatRepository.addRecentCall(name, phone, outgoing = true) }
                                         context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + Uri.encode(phone))))
                                     }
                                     .padding(horizontal = 16.dp, vertical = 12.dp),
@@ -216,6 +217,7 @@ fun DialerScreen(onBack: () -> Unit) {
 }
 
 /** Иваз кардани аккаунт */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AccountSwitchScreen(onBack: () -> Unit, onSwitched: () -> Unit) {
     val container = Dependencies.get()

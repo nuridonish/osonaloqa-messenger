@@ -53,7 +53,7 @@ import tj.osonaloqa.chat.ui.screens.main.formatTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun PickerScaffold(title: String, onBack: () -> Unit, content: @Composable () -> Unit) {
+private fun PickerScaffold(title: String, onBack: () -> Unit, content: @Composable androidx.compose.foundation.layout.ColumnScope.() -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
