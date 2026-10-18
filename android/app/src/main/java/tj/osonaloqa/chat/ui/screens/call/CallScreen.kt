@@ -28,6 +28,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -212,7 +213,7 @@ class CallSession(
             val t = transceiver?.receiver?.track()
             if (t is VideoTrack) {
                 remoteVideoTrack = t
-                remoteRenderer?.addSink(t)
+                remoteRenderer?.let { t.addSink(it) }
             }
         }
         override fun onSignalingChange(state: PeerConnection.SignalingState?) {}

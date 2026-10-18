@@ -24,7 +24,9 @@ import tj.osonaloqa.chat.ui.screens.extra.GroupScreen
 import tj.osonaloqa.chat.ui.screens.extra.StarredScreen
 import tj.osonaloqa.chat.ui.screens.extra.StatusViewerScreen
 import tj.osonaloqa.chat.ui.screens.main.MainScreen
+import androidx.compose.material3.Text
 import androidx.compose.ui.res.stringResource
+import tj.osonaloqa.chat.R
 import tj.osonaloqa.chat.ui.screens.settings.AboutScreen
 import tj.osonaloqa.chat.ui.screens.settings.AccessibilityScreen
 import tj.osonaloqa.chat.ui.screens.settings.ChatsSettingsScreen
