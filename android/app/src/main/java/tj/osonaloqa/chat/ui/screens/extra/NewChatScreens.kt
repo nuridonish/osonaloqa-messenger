@@ -477,7 +477,6 @@ fun NewContactScreen(onBack: () -> Unit, onAdded: (String) -> Unit) {
 
 /** ЗИНА 1.3 — Новое сообщество */
 @OptIn(ExperimentalMaterial3Api::class)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommunityScreen(onBack: () -> Unit, onCreated: (String) -> Unit) {
     val container = Dependencies.get()
@@ -603,6 +602,7 @@ fun ContactsInAppScreen(onBack: () -> Unit, onOpenChat: (String) -> Unit) {
 @Composable
 fun InviteScreen(onBack: () -> Unit) {
     val context = LocalContext.current
+    val chooserTitle = stringResource(R.string.step3_invite_to_app)
     val link = "https://osonaloqa.tj/invite — Осон Алоқа мессенҷери зебо ва бехатар! Инро насб кунед!"
     val apps = listOf(
         "WhatsApp" to "com.whatsapp",
@@ -634,7 +634,7 @@ fun InviteScreen(onBack: () -> Unit) {
                         type = "text/plain"
                         putExtra(Intent.EXTRA_TEXT, link)
                     }
-                    context.startActivity(Intent.createChooser(i, stringResource(R.string.step3_invite_to_app)))
+                    context.startActivity(Intent.createChooser(i, chooserTitle))
                 },
                 modifier = Modifier.fillMaxWidth(),
             ) {
