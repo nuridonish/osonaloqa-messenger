@@ -49,6 +49,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -132,17 +133,16 @@ fun DialerScreen(onBack: () -> Unit) {
                     rows.forEach { row ->
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                             row.forEach { (d, letters, plus) ->
-                                val combined = combinedClickable(
-                                    interactionSource = androidx.compose.foundation.interaction.MutableInteractionSource(),
-                                    indication = null,
-                                    onClick = { number += d },
-                                    onLongClick = if (plus) ({ number += "+" }) else null,
-                                )
                                 Box(
                                     modifier = Modifier
                                         .size(72.dp)
                                         .background(MaterialTheme.colorScheme.surfaceVariant, CircleShape)
-                                        .then(combined),
+                                        .pointerInput(d, plus) {
+                                            androidx.compose.foundation.gestures.detectTapGestures(
+                                                onTap = { number += d },
+                                                onLongPress = { if (plus) number += "+" },
+                                            )
+                                        },
                                     contentAlignment = Alignment.Center,
                                 ) {
                                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
