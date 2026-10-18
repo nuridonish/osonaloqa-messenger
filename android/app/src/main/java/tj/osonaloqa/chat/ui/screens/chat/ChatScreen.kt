@@ -81,7 +81,7 @@ import tj.osonaloqa.chat.ui.screens.main.formatTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ChatScreen(chatId: String, onBack: () -> Unit) {
+fun ChatScreen(chatId: String, onBack: () -> Unit, onCall: (video: Boolean, outgoing: Boolean) -> Unit = { _, _ -> }) {
     val container = Dependencies.get()
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -170,8 +170,8 @@ fun ChatScreen(chatId: String, onBack: () -> Unit) {
                     }
                 },
                 actions = {
-                    IconButton(onClick = { }) { Icon(Icons.Filled.Videocam, contentDescription = null) }
-                    IconButton(onClick = { }) { Icon(Icons.Filled.Call, contentDescription = null) }
+                    IconButton(onClick = { onCall(true, true) }) { Icon(Icons.Filled.Videocam, contentDescription = null) }
+                    IconButton(onClick = { onCall(false, true) }) { Icon(Icons.Filled.Call, contentDescription = null) }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface),
             )

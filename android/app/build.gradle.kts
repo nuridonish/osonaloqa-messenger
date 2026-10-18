@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.coil.compose)
+    implementation(libs.stream.webrtc)
     testImplementation(libs.junit)
     debugImplementation(libs.compose.ui.tooling)
 }

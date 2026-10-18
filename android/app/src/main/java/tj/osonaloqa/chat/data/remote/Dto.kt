@@ -140,5 +140,12 @@ data class WsMessage(
     val message: MessageDto? = null,
     val duplicate: Boolean? = null,
     val lastReadSeq: Long? = null,
+    val from: String? = null,
+    val callId: String? = null,
+    val video: Boolean? = null,
+    val sdp: String? = null,
+    val candidate: String? = null,
+    val sdpMid: String? = null,
+    val sdpMLineIndex: Int? = null,
     val error: String? = null,
 )

@@ -169,4 +169,8 @@
     <string name="tab_groups">Гурӯҳҳо</string>
     <string name="settings_help">Кумак ва фикру мулоҳиза</string>
     <string name="profile_avatar_hint">Акс зуд илова мешавад</string>
+    <string name="call_calling">Занг мешавад...</string>
+    <string name="call_incoming">Занги омада</string>
+    <string name="call_connected">Пайваст шуд</string>
+    <string name="call_ended">Занг тамом шуд</string>
 </resources>

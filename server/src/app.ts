@@ -21,6 +21,11 @@ export async function buildApp(opts?: { dbFile?: string; logger?: boolean }) {
   // Ҳатман пеш аз роутҳо — то hook-и onRoute-и websocket татбиқ шавад
   await app.register(websocket, { options: { maxPayload: 1024 * 1024 } });
 
+  // Body-и хом барои боркунии медиа (акс/видео/овоз/файл)
+  app.addContentTypeParser('*', { parseAs: 'buffer' }, (_req, body, done) => {
+    done(null, body);
+  });
+
   app.get('/health', async () => ({ ok: true, name: 'osonaloqa-server', time: Date.now() }));
   app.get('/v1/meta/country-codes', async () => ({ codes: allCountryCodes() }));
 

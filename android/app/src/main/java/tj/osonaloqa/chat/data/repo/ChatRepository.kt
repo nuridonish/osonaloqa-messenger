@@ -45,6 +45,9 @@ class ChatRepository(
     private val _connectionState = MutableStateFlow(false)
     val connectionState: StateFlow<Boolean> = _connectionState
 
+    private val _callEvents = MutableStateFlow<WsMessage?>(null)
+    val callEvents: StateFlow<WsMessage?> = _callEvents
+
     fun observeChats(): Flow<List<ChatEntity>> = db.chatDao().observeAll()
     fun observeChat(id: String): Flow<ChatEntity?> = db.chatDao().observe(id)
     fun observeMessages(chatId: String): Flow<List<MessageEntity>> = db.messageDao().observeChat(chatId)
@@ -179,6 +182,9 @@ class ChatRepository(
                 _peerStates.value = _peerStates.value + (uid to (
                     _peerStates.value[uid] ?: PeerState()
                     ).copy(online = msg.online == true, lastSeenAt = msg.lastSeenAt ?: 0, typing = false))
+            }
+            "call.invite", "call.accept", "call.reject", "call.end", "call.sdp", "call.ice" -> {
+                _callEvents.value = msg
             }
         }
     }

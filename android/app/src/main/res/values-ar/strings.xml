@@ -170,4 +170,8 @@
         <string name="tab_groups">Groups</string>
     <string name="settings_help">المساعدة والتعليقات</string>
     <string name="profile_avatar_hint">يمكن إضافة الصورة قريباً</string>
+    <string name="call_calling">جارٍ الاتصال...</string>
+    <string name="call_incoming">مكالمة واردة</string>
+    <string name="call_connected">تم الاتصال</string>
+    <string name="call_ended">انتهت المكالمة</string>
 </resources>

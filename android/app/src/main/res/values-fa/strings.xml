@@ -49,4 +49,8 @@
     <string name="parental_no_status_hint">Statuses hidden</string>
     <string name="settings_help">کمک و بازخورد</string>
     <string name="profile_avatar_hint">به زودی می‌توانید عکس اضافه کنید</string>
+    <string name="call_calling">در حال تماس...</string>
+    <string name="call_incoming">تماس ورودی</string>
+    <string name="call_connected">متصل شد</string>
+    <string name="call_ended">تماس پایان یافت</string>
 </resources>

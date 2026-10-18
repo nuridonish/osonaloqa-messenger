@@ -170,4 +170,8 @@
         <string name="tab_groups">Groups</string>
     <string name="settings_help">Yordam va fikr-mulohaza</string>
     <string name="profile_avatar_hint">Rasm tez orada qo‘shiladi</string>
+    <string name="call_calling">Qo'ng'iroq...</string>
+    <string name="call_incoming">Kiruvchi qo'ng'iroq</string>
+    <string name="call_connected">Ulandi</string>
+    <string name="call_ended">Qo'ng'iroq tugadi</string>
 </resources>

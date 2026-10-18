@@ -17,7 +17,17 @@ interface SendMsg {
 interface AckMsg { type: 'ack'; messageId: string; state: 'delivered' | 'read' }
 interface TypingMsg { type: 'typing'; chatId: string; on: boolean }
 interface PingMsg { type: 'ping' }
-type ClientMsg = SendMsg | AckMsg | TypingMsg | PingMsg | { type: 'auth'; token?: string } | { type: 'error' };
+interface CallMsg {
+  type: 'call.invite' | 'call.accept' | 'call.reject' | 'call.end' | 'call.sdp' | 'call.ice';
+  chatId: string;
+  callId?: string;
+  video?: boolean;
+  sdp?: string;
+  candidate?: string;
+  sdpMid?: string;
+  sdpMLineIndex?: number;
+}
+type ClientMsg = SendMsg | AckMsg | TypingMsg | PingMsg | { type: 'auth'; token?: string } | { type: 'error' } | CallMsg;
 
 export function wsRoutes(app: FastifyInstance, db: Db): void {
   app.get('/v1/ws', { websocket: true }, (socket: WebSocket, req) => {
@@ -170,6 +180,21 @@ export function wsRoutes(app: FastifyInstance, db: Db): void {
         case 'ping':
           send({ type: 'pong', t: Date.now() });
           break;
+
+        case 'call.invite':
+        case 'call.accept':
+        case 'call.reject':
+        case 'call.end':
+        case 'call.sdp':
+        case 'call.ice': {
+          const call = msg as CallMsg;
+          if (!call.chatId) return send({ type: 'error', error: 'bad_request' });
+          const isMember = db.prepare('SELECT 1 FROM chat_members WHERE chat_id = ? AND user_id = ?').get(call.chatId, userId);
+          if (!isMember) return;
+          const payload = { ...call, from: userId };
+          hub.broadcastToChat(db, call.chatId, payload, userId);
+          break;
+        }
       }
     });
 

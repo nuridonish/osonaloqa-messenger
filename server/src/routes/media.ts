@@ -19,16 +19,9 @@ export function mediaRoutes(app: FastifyInstance, db: Db): void {
   const dir = join(process.cwd(), 'data', 'media');
   mkdirSync(dir, { recursive: true });
 
-  app.post('/v1/media', { preHandler: [authenticate] }, async (req, reply) => {
-    const chunks: Buffer[] = [];
-    let size = 0;
-    for await (const chunk of req.raw) {
-      size += chunk.length;
-      if (size > MAX_SIZE) return reply.code(413).send({ error: 'too_large' });
-      chunks.push(chunk as Buffer);
-    }
-    const buf = Buffer.concat(chunks);
-    if (buf.length === 0) return reply.code(400).send({ error: 'empty' });
+  app.post('/v1/media', { preHandler: [authenticate], bodyLimit: 64 * 1024 * 1024 }, async (req, reply) => {
+    const buf = req.body as Buffer;
+    if (!buf || buf.length === 0) return reply.code(400).send({ error: 'empty' });
     const mime = String(req.headers['content-type'] ?? 'application/octet-stream').split(';')[0];
     const ext = EXT_BY_MIME[mime] ?? 'bin';
     const id = randomUUID();

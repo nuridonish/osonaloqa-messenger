@@ -169,4 +169,8 @@
     <string name="tab_groups">Группы</string>
     <string name="settings_help">Помощь и отзывы</string>
     <string name="profile_avatar_hint">Фото скоро можно будет добавить</string>
+    <string name="call_calling">Вызов...</string>
+    <string name="call_incoming">Входящий звонок</string>
+    <string name="call_connected">Подключено</string>
+    <string name="call_ended">Звонок завершён</string>
 </resources>

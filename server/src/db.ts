@@ -85,7 +85,14 @@ export function openDb(file: string): Db {
   db.pragma('journal_mode = WAL');
   db.pragma('foreign_keys = ON');
   db.exec(SCHEMA);
+  migrate(db);
   return db;
+}
+
+function migrate(db: Db): void {
+  try {
+    db.exec('ALTER TABLE statuses ADD COLUMN bg TEXT');
+  } catch { /* аллакай ҳаст */ }
 }
 
 export const now = () => Date.now();
