@@ -53,4 +53,5 @@
     <string name="call_incoming">تماس ورودی</string>
     <string name="call_connected">متصل شد</string>
     <string name="call_ended">تماس پایان یافت</string>
+    <string name="about_credits">توسعه‌دهنده: OPC · هم‌سازنده: خلبتایف مصطفی (گروه MSFGram)</string>
 </resources>

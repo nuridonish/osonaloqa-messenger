@@ -151,6 +151,8 @@ class CallSession(
     fun acceptAsCallee(incomingSdp: String?) {
         if (incomingSdp != null) {
             peerConnection?.setRemoteDescription(Simple(), SessionDescription(SessionDescription.Type.OFFER, incomingSdp))
+            hasRemoteDesc = true
+            flushIce()
             peerConnection?.createAnswer(object : SdpObserver {
                 override fun onCreateSuccess(desc: SessionDescription) {
                     peerConnection?.setLocalDescription(Simple(), desc)
@@ -166,13 +168,26 @@ class CallSession(
     fun answerArrived(answerSdp: String?) {
         if (answerSdp != null) {
             peerConnection?.setRemoteDescription(Simple(), SessionDescription(SessionDescription.Type.ANSWER, answerSdp))
+            hasRemoteDesc = true
+            flushIce()
         }
     }
 
+    private fun flushIce() {
+        val q = pendingIce.toList()
+        pendingIce.clear()
+        q.forEach { peerConnection?.addIceCandidate(it) }
+    }
+
+    var onStateChanged: ((String) -> Unit)? = null
+
+    private var hasRemoteDesc = false
+    private val pendingIce = mutableListOf<IceCandidate>()
+
     fun iceArrived(candidate: String?, mid: String?, index: Int?) {
-        if (candidate != null) {
-            peerConnection?.addIceCandidate(IceCandidate(mid, index ?: 0, candidate))
-        }
+        if (candidate == null) return
+        val c = IceCandidate(mid, index ?: 0, candidate)
+        if (hasRemoteDesc) peerConnection?.addIceCandidate(c) else pendingIce.add(c)
     }
 
     fun toggleMic(): Boolean {
@@ -288,7 +303,10 @@ fun CallScreen(
                     status = "connected"
                 }
             }
-            "call.ice" -> session.iceArrived(ev.candidate, ev.sdpMid, ev.sdpMLineIndex)
+            "call.ice" -> {
+                // Кандидатҳо фавран татбиқ мешаванд; агар remote ҳанӯз набошад — дар навбат мемонанд
+                session.iceArrived(ev.candidate, ev.sdpMid, ev.sdpMLineIndex)
+            }
             "call.reject", "call.end" -> {
                 session.dispose()
                 ended = true
@@ -396,7 +414,13 @@ fun CallScreen(
                         .background(Color(0xFF2BD46B), CircleShape)
                         .clickableNoIndication {
                             session.start()
-                            session.acceptAsCallee(container.chatRepository.callEvents.value?.sdp)
+                            // SDP-и даъват аз pendingCall — на аз callEvents (ки ICE ҷойгирин мекунад)
+                            val inviteSdp = container.chatRepository.pendingCall.value?.sdp
+                            session.acceptAsCallee(inviteSdp)
+                            // Кандидатҳои дар навбат мондашуда
+                            val queued = container.chatRepository.iceQueue.toList()
+                            container.chatRepository.iceQueue.clear()
+                            queued.forEach { session.iceArrived(it.candidate, it.sdpMid, it.sdpMLineIndex) }
                             status = "connected"
                         },
                     contentAlignment = Alignment.Center,

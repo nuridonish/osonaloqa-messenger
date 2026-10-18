@@ -4,10 +4,7 @@ data class Country(
     val iso: String,
     val dial: String,
     val nameTj: String,
-) {
-    val flag: String
-        get() = iso.uppercase().map { Character.toChars(0x1F1E6 + (it.code - 65))[0] }.joinToString("")
-}
+)
 
 object Countries {
     val all: List<Country> = listOf(

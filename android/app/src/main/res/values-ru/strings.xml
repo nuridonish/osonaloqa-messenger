@@ -173,4 +173,5 @@
     <string name="call_incoming">Входящий звонок</string>
     <string name="call_connected">Подключено</string>
     <string name="call_ended">Звонок завершён</string>
+    <string name="about_credits">Разработчик: OPC · Соавтор: Холбутаев Мустафо (группа MSFGram)</string>
 </resources>

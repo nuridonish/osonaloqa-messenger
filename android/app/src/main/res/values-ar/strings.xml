@@ -174,4 +174,5 @@
     <string name="call_incoming">مكالمة واردة</string>
     <string name="call_connected">تم الاتصال</string>
     <string name="call_ended">انتهت المكالمة</string>
+    <string name="about_credits">المطور: OPC · مساهم: خلبتايف مصطفى (مجموعة MSFGram)</string>
 </resources>

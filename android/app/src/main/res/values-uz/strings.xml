@@ -174,4 +174,5 @@
     <string name="call_incoming">Kiruvchi qo\'ng\'iroq</string>
     <string name="call_connected">Ulandi</string>
     <string name="call_ended">Qo\'ng\'iroq tugadi</string>
+    <string name="about_credits">Ishlab chiqaruvchi: OPC · Hammuallif: Xolbutayev Mustafo (MSFGram guruhi)</string>
 </resources>

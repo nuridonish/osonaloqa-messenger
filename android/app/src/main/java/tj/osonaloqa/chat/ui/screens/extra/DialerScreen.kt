@@ -7,6 +7,7 @@ import android.net.Uri
 import android.provider.ContactsContract
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -58,7 +59,7 @@ import tj.osonaloqa.chat.Dependencies
 import tj.osonaloqa.chat.R
 import java.util.Calendar
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun DialerScreen(onBack: () -> Unit) {
     val context = LocalContext.current
@@ -122,19 +123,25 @@ fun DialerScreen(onBack: () -> Unit) {
                         modifier = Modifier.padding(vertical = 16.dp),
                     )
                     val rows = listOf(
-                        listOf("1" to "", "2" to "ABC", "3" to "DEF"),
-                        listOf("4" to "GHI", "5" to "JKL", "6" to "MNO"),
-                        listOf("7" to "PQRS", "8" to "TUV", "9" to "WXYZ"),
-                        listOf("*" to "", "0" to "+", "#" to ""),
+                        listOf(Triple("1", "", false), Triple("2", "ABC", false), Triple("3", "DEF", false)),
+                        listOf(Triple("4", "GHI", false), Triple("5", "JKL", false), Triple("6", "MNO", false)),
+                        listOf(Triple("7", "PQRS", false), Triple("8", "TUV", false), Triple("9", "WXYZ", false)),
+                        listOf(Triple("*", "", false), Triple("0", "+", true), Triple("#", "", false)),
                     )
                     rows.forEach { row ->
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-                            row.forEach { (d, letters) ->
+                            row.forEach { (d, letters, plus) ->
+                                val combined = androidx.compose.foundation.combinedClickable(
+                                    interactionSource = androidx.compose.foundation.interaction.MutableInteractionSource(),
+                                    indication = null,
+                                    onClick = { number += d },
+                                    onLongClick = if (plus) ({ number += "+" }) else null,
+                                )
                                 Box(
                                     modifier = Modifier
                                         .size(72.dp)
                                         .background(MaterialTheme.colorScheme.surfaceVariant, CircleShape)
-                                        .clickable { number += d },
+                                        .then(combined),
                                     contentAlignment = Alignment.Center,
                                 ) {
                                     Column(horizontalAlignment = Alignment.CenterHorizontally) {

@@ -35,6 +35,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -80,7 +82,7 @@ fun PhoneScreen(onBack: () -> Unit, onCodeSent: (String) -> Unit) {
             )
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Button(onClick = { pickerOpen = true }) {
-                    Text("${country.flag} ${country.dial}")
+                    Text("${country.iso} ${country.dial}")
                 }
                 OutlinedTextField(
                     value = national,
@@ -162,7 +164,16 @@ fun CountryPicker(onPick: (Country) -> Unit) {
                 val c = filtered[i]
                 androidx.compose.material3.ListItem(
                     headlineContent = { Text(c.nameTj) },
-                    leadingContent = { Text(c.flag, fontSize = 24.sp) },
+                    leadingContent = {
+                        Box(
+                            modifier = Modifier
+                                .size(width = 44.dp, height = 30.dp)
+                                .background(MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(6.dp)),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            Text(c.iso, color = MaterialTheme.colorScheme.primary, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+                        }
+                    },
                     trailingContent = { Text(c.dial, color = MaterialTheme.colorScheme.primary) },
                     modifier = Modifier
                         .fillMaxWidth()

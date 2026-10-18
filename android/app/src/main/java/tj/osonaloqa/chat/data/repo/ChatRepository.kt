@@ -48,6 +48,13 @@ class ChatRepository(
     private val _callEvents = MutableStateFlow<WsMessage?>(null)
     val callEvents: StateFlow<WsMessage?> = _callEvents
 
+    /** Даъвати фаъоли оммадихоҳ: SDP + видео */
+    private val _pendingCall = MutableStateFlow<WsMessage?>(null)
+    val pendingCall: StateFlow<WsMessage?> = _pendingCall
+
+    /** Навбати ICE-кандидатҳо (то татбиқи RemoteDescription) */
+    val iceQueue = mutableListOf<WsMessage>()
+
     fun observeChats(): Flow<List<ChatEntity>> = db.chatDao().observeAll()
     fun observeChat(id: String): Flow<ChatEntity?> = db.chatDao().observe(id)
     fun observeMessages(chatId: String): Flow<List<MessageEntity>> = db.messageDao().observeChat(chatId)
@@ -184,6 +191,20 @@ class ChatRepository(
                     ).copy(online = msg.online == true, lastSeenAt = msg.lastSeenAt ?: 0, typing = false))
             }
             "call.invite", "call.accept", "call.reject", "call.end", "call.sdp", "call.ice" -> {
+                when (msg.type) {
+                    "call.invite" -> {
+                        iceQueue.clear()
+                        _pendingCall.value = msg
+                    }
+                    "call.ice" -> {
+                        // То оғози пайваст — дар навбат нигоҳ медорем
+                        if (iceQueue.size < 50) iceQueue.add(msg)
+                    }
+                    "call.reject", "call.end" -> {
+                        _pendingCall.value = null
+                        iceQueue.clear()
+                    }
+                }
                 _callEvents.value = msg
             }
         }

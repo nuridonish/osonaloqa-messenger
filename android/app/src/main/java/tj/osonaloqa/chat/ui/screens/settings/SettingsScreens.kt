@@ -502,7 +502,19 @@ fun LanguageScreen(onBack: () -> Unit) {
                         .padding(horizontal = 16.dp, vertical = 12.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Text(l.flag, fontSize = 22.sp)
+                    Box(
+                        modifier = Modifier
+                            .size(width = 44.dp, height = 30.dp)
+                            .background(MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(6.dp)),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            l.tag.take(2).uppercase(),
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 13.sp,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
                     Spacer(Modifier.width(14.dp))
                     Text(l.name, fontSize = 16.sp, modifier = Modifier.weight(1f))
                     if (current == l.tag) Text("✓", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
@@ -538,6 +550,8 @@ fun AboutScreen(onBack: () -> Unit) {
             InfoRowStatic(stringResource(R.string.version), BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")")
             InfoRowStatic(stringResource(R.string.server_url), BuildConfig.BASE_URL)
             InfoRowStatic(stringResource(R.string.target_android), "Android 8.0+ (14–16)")
+            Spacer(Modifier.height(12.dp))
+            Text(stringResource(R.string.about_credits), fontSize = 14.sp, color = MaterialTheme.colorScheme.onSurface)
             Spacer(Modifier.height(12.dp))
             Text(stringResource(R.string.about_updates_none), fontSize = 13.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }

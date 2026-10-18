@@ -100,10 +100,10 @@ fun OsonApp() {
         }
         composable(Routes.MAIN) {
             val container = Dependencies.get()
-            val callEvent by container.chatRepository.callEvents.collectAsState()
+            val pendingCall by container.chatRepository.pendingCall.collectAsState()
             var incoming by remember { mutableStateOf<tj.osonaloqa.chat.data.remote.WsMessage?>(null) }
-            LaunchedEffect(callEvent?.type, callEvent?.from) {
-                val ev = callEvent
+            LaunchedEffect(pendingCall?.type, pendingCall?.from) {
+                val ev = pendingCall
                 if (ev?.type == "call.invite" && ev.sdp != null && ev.from != null) incoming = ev
             }
             incoming?.let { ev ->
@@ -124,6 +124,7 @@ fun OsonApp() {
                     dismissButton = {
                         androidx.compose.material3.TextButton(onClick = {
                             container.wsClient.send(tj.osonaloqa.chat.data.remote.WsMessage(type = "call.reject", chatId = ev.chatId))
+                            container.chatRepository.pendingCall.value = null
                             incoming = null
                         }) { Text(stringResource(R.string.cancel)) }
                     },
