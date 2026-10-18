@@ -165,9 +165,43 @@ fun OsonApp() {
             SettingsTreeScreen(onBack = { nav.popBackStack() }, onOpenRoute = { nav.navigate(it) })
         }
         composable("group/new") {
-            GroupScreen(onBack = { nav.popBackStack() }, onCreated = { chatId ->
+            tj.osonaloqa.chat.ui.screens.extra.GroupScreenV2(onBack = { nav.popBackStack() }, onCreated = { chatId ->
                 nav.navigate(Routes.chat(chatId)) { popUpTo("group/new") { inclusive = true } }
             })
+        }
+        composable("newchat") {
+            tj.osonaloqa.chat.ui.screens.extra.NewChatScreen(
+                onBack = { nav.popBackStack() },
+                onOpenRoute = { nav.navigate(it) },
+                onOpenChat = { nav.navigate(Routes.chat(it)) },
+            )
+        }
+        composable("contact/new") {
+            tj.osonaloqa.chat.ui.screens.extra.NewContactScreen(
+                onBack = { nav.popBackStack() },
+                onAdded = { nav.navigate(Routes.chat(it)) },
+            )
+        }
+        composable("community/new") {
+            tj.osonaloqa.chat.ui.screens.extra.CommunityScreen(
+                onBack = { nav.popBackStack() },
+                onCreated = { nav.navigate(Routes.chat(it)) },
+            )
+        }
+        composable("contacts/inapp") {
+            tj.osonaloqa.chat.ui.screens.extra.ContactsInAppScreen(
+                onBack = { nav.popBackStack() },
+                onOpenChat = { nav.navigate(Routes.chat(it)) },
+            )
+        }
+        composable("invite") {
+            tj.osonaloqa.chat.ui.screens.extra.InviteScreen(onBack = { nav.popBackStack() })
+        }
+        composable("settings/contact") {
+            tj.osonaloqa.chat.ui.screens.extra.ContactSettingsScreen(onBack = { nav.popBackStack() })
+        }
+        composable("usage/help") {
+            tj.osonaloqa.chat.ui.screens.extra.UsageHelpScreen(onBack = { nav.popBackStack() })
         }
         composable("broadcast") {
             BroadcastScreen(onBack = { nav.popBackStack() }, onDone = { nav.popBackStack() })

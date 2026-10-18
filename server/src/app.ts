@@ -9,6 +9,7 @@ import { chatRoutes } from './routes/chats.js';
 import { statusRoutes } from './routes/statuses.js';
 import { mediaRoutes } from './routes/media.js';
 import { accountRoutes } from './routes/account.js';
+import { searchRoutes } from './routes/search.js';
 import { wsRoutes } from './ws.js';
 import { allCountryCodes } from './phone.js';
 import { existsSync } from 'node:fs';
@@ -42,6 +43,7 @@ export async function buildApp(opts?: { dbFile?: string; logger?: boolean }) {
   statusRoutes(app, db);
   mediaRoutes(app, db);
   accountRoutes(app, db);
+  searchRoutes(app, db);
   wsRoutes(app, db);
 
   return { app, db };

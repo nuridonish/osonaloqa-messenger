@@ -50,7 +50,7 @@ import java.util.Date
 import java.util.Locale
 
 @Composable
-fun ChatsTab(onOpenChat: (String) -> Unit) {
+fun ChatsTab(onOpenChat: (String) -> Unit, onOpenRoute: (String) -> Unit = {}) {
     val container = Dependencies.get()
     val scope = rememberCoroutineScope()
     val chats by container.chatRepository.observeChats().collectAsState(initial = emptyList())
@@ -64,7 +64,7 @@ fun ChatsTab(onOpenChat: (String) -> Unit) {
     Scaffold(
         floatingActionButton = {
             ExtendedFloatingActionButton(
-                onClick = { showNewChat = true },
+                onClick = { onOpenRoute("newchat") },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 shape = RoundedCornerShape(18.dp),

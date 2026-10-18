@@ -88,6 +88,26 @@ class ChatRepository(
     suspend fun listUsers(): List<tj.osonaloqa.chat.data.remote.UserDto>? =
         authedCall { auth -> api.usersList(auth) }?.users
 
+    suspend fun searchUsers(q: String): List<tj.osonaloqa.chat.data.remote.UserDto>? =
+        authedCall { auth -> api.searchUsers(auth, q) }?.users
+
+    /** Рӯйхати сиёҳ (маҳаллӣ, дар DataStore) */
+    private val _blocked = MutableStateFlow<Set<String>>(emptySet())
+    val blocked: StateFlow<Set<String>> = _blocked
+
+    suspend fun loadBlocked(container: tj.osonaloqa.chat.AppContainer) {
+        _blocked.value = container.prefs.blockedPhones()
+    }
+
+    suspend fun toggleBlockedPhone(container: tj.osonaloqa.chat.AppContainer, phone: String) {
+        val cur = _blocked.value.toMutableSet()
+        if (!cur.add(phone)) cur.remove(phone)
+        _blocked.value = cur
+        container.prefs.saveBlockedPhones(_blocked.value)
+    }
+
+    fun isBlocked(phone: String): Boolean = phone in _blocked.value
+
     suspend fun listDevices(): List<tj.osonaloqa.chat.data.remote.DeviceDto>? =
         authedCall { auth -> api.devices(auth) }?.devices
 

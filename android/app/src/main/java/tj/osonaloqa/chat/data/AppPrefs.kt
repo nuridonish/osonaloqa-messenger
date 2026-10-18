@@ -5,6 +5,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -36,6 +37,8 @@ data class AppSettings(
     val privacyReadReceipts: Boolean = true,
     val privacyTyping: Boolean = true,
     val archivedVisible: Boolean = false,
+    val contactSync: Boolean = true,
+    val blocked: Set<String> = emptySet(),
 )
 
 class AppPrefs(private val context: Context) {
@@ -64,6 +67,8 @@ class AppPrefs(private val context: Context) {
     private val pRead = booleanPreferencesKey("p_read")
     private val pTyping = booleanPreferencesKey("p_typing")
     private val archivedKey = booleanPreferencesKey("archived_visible")
+    private val contactSyncKey = booleanPreferencesKey("contact_sync")
+    private val blockedKey = stringSetPreferencesKey("blocked_phones")
 
     val settings: Flow<AppSettings> = context.prefsStore.data.map { p ->
         AppSettings(
@@ -91,8 +96,13 @@ class AppPrefs(private val context: Context) {
             privacyReadReceipts = p[pRead] ?: true,
             privacyTyping = p[pTyping] ?: true,
             archivedVisible = p[archivedKey] ?: false,
+            contactSync = p[contactSyncKey] ?: true,
+            blocked = p[blockedKey] ?: emptySet(),
         )
     }
+
+    suspend fun saveBlockedPhones(set: Set<String>) = context.prefsStore.edit { it[blockedKey] = set }
+    suspend fun setContactSync(v: Boolean) = context.prefsStore.edit { it[contactSyncKey] = v }
 
     suspend fun setString(key: String, value: String) = context.prefsStore.edit {
         when (key) {

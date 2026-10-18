@@ -52,6 +52,12 @@ interface OsonApi {
     @retrofit2.http.GET("v1/users/list")
     suspend fun usersList(@retrofit2.http.Header("Authorization") auth: String): UserListRes
 
+    @retrofit2.http.GET("v1/users/search")
+    suspend fun searchUsers(
+        @retrofit2.http.Header("Authorization") auth: String,
+        @retrofit2.http.Query("q") q: String,
+    ): UserListRes
+
     @retrofit2.http.GET("v1/devices")
     suspend fun devices(@retrofit2.http.Header("Authorization") auth: String): DevicesRes
 

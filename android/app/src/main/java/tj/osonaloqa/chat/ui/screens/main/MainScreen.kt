@@ -160,9 +160,9 @@ fun MainScreen(onOpenChat: (String) -> Unit, onOpenSettings: () -> Unit, onOpenR
     ) { pad ->
         Box(Modifier.padding(pad)) {
             when (tab) {
-                0 -> ChatsTab(onOpenChat = onOpenChat)
+                0 -> ChatsTab(onOpenChat = onOpenChat, onOpenRoute = onOpenRoute)
                 1 -> StatusTab(onOpenViewer = { onOpenRoute("status/viewer") })
-                2 -> CommunitiesTab()
+                2 -> CommunitiesTab(onOpenChat = onOpenChat, onNewGroup = { onOpenRoute("community/new") })
                 3 -> CallsTab(onOpenDialer = { onOpenRoute("calls/dialer") })
             }
         }
