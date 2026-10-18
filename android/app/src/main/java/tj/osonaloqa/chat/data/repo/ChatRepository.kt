@@ -96,7 +96,7 @@ class ChatRepository(
     val blocked: StateFlow<Set<String>> = _blocked
 
     suspend fun loadBlocked(container: tj.osonaloqa.chat.AppContainer) {
-        _blocked.value = container.prefs.blockedPhones()
+        _blocked.value = kotlinx.coroutines.flow.first(container.prefs.settings).blocked
     }
 
     suspend fun toggleBlockedPhone(container: tj.osonaloqa.chat.AppContainer, phone: String) {

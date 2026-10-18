@@ -34,6 +34,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -71,7 +72,7 @@ import tj.osonaloqa.chat.R
 import tj.osonaloqa.chat.data.remote.UserDto
 
 @Composable
-internal fun UserRowSimple(user: UserDto, onClick: () -> Unit, subtitle: String? = null) {
+internal fun UserRowSimple(user: UserDto, subtitle: String? = null, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -426,6 +427,8 @@ fun NewContactScreen(onBack: () -> Unit, onAdded: (String) -> Unit) {
                 modifier = Modifier.fillMaxWidth(),
             )
             msg?.let { Text(it, Modifier.padding(top = 10.dp), color = MaterialTheme.colorScheme.primary) }
+            val addedTxt = stringResource(R.string.contact_added)
+            val notInAppTxt = stringResource(R.string.contact_not_in_app)
             Spacer(Modifier.height(16.dp))
             Button(
                 onClick = {
@@ -435,10 +438,10 @@ fun NewContactScreen(onBack: () -> Unit, onAdded: (String) -> Unit) {
                         val match = found.find { it.phone.endsWith(phone) || (username.isNotBlank() && it.username == username) }
                         if (match != null) {
                             val chatId = container.chatRepository.createPrivateChat(match.id)
-                            msg = "✓ ${stringResource(R.string.contact_added)}"
+                            msg = "✓ $addedTxt"
                             if (chatId != null) onAdded(chatId)
                         } else {
-                            msg = stringResource(R.string.contact_not_in_app)
+                            msg = notInAppTxt
                         }
                         foundId = match?.id
                     }
@@ -473,6 +476,7 @@ fun NewContactScreen(onBack: () -> Unit, onAdded: (String) -> Unit) {
 }
 
 /** ЗИНА 1.3 — Новое сообщество */
+@OptIn(ExperimentalMaterial3Api::class)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CommunityScreen(onBack: () -> Unit, onCreated: (String) -> Unit) {
@@ -556,6 +560,7 @@ private fun CommunityFeatureRow(num: String, text: String) {
 }
 
 /** ЗИНА 2 — Контакты в Осон Алоқа */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContactsInAppScreen(onBack: () -> Unit, onOpenChat: (String) -> Unit) {
     val container = Dependencies.get()
@@ -594,6 +599,7 @@ fun ContactsInAppScreen(onBack: () -> Unit, onOpenChat: (String) -> Unit) {
 }
 
 /** ЗИНА 3 — Пригласить в Осон Алоқа (WhatsApp, MAX, OK, Instagram, VK, браузерҳо) */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InviteScreen(onBack: () -> Unit) {
     val context = LocalContext.current
@@ -674,6 +680,7 @@ fun InviteScreen(onBack: () -> Unit) {
 }
 
 /** Настройка контакта (⋮) */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContactSettingsScreen(onBack: () -> Unit) {
     val container = Dependencies.get()
@@ -755,6 +762,7 @@ fun ContactSettingsScreen(onBack: () -> Unit) {
 }
 
 /** Помощь — дастури истифода */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UsageHelpScreen(onBack: () -> Unit) {
     androidx.compose.material3.Scaffold(
