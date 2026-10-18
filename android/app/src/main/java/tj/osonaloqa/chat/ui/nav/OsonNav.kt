@@ -118,7 +118,9 @@ fun OsonApp() {
                         androidx.compose.material3.TextButton(onClick = {
                             val target = incoming
                             incoming = null
-                            nav.navigate("call/${target?.chatId}/${target?.video ?: false}/false")
+                            val video = target?.video ?: false
+                            val cid = target?.chatId ?: ""
+                            nav.navigate("call/$cid/$video/false")
                         }) { Text(stringResource(R.string.otp_verify)) }
                     },
                     dismissButton = {

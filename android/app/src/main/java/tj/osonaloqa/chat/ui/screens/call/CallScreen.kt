@@ -242,7 +242,6 @@ class CallSession(
         override fun onConnectionChange(newState: PeerConnection.PeerConnectionState?) {}
     }
 
-    var onStateChanged: ((String) -> Unit)? = null
 
     private class Simple : SdpObserver {
         override fun onCreateSuccess(desc: SessionDescription?) {}
