@@ -132,7 +132,7 @@ fun DialerScreen(onBack: () -> Unit) {
                     rows.forEach { row ->
                         Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
                             row.forEach { (d, letters, plus) ->
-                                val combined = androidx.compose.foundation.combinedClickable(
+                                val combined = combinedClickable(
                                     interactionSource = androidx.compose.foundation.interaction.MutableInteractionSource(),
                                     indication = null,
                                     onClick = { number += d },

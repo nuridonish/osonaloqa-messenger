@@ -52,6 +52,11 @@ class ChatRepository(
     private val _pendingCall = MutableStateFlow<WsMessage?>(null)
     val pendingCall: StateFlow<WsMessage?> = _pendingCall
 
+    fun clearPendingCall() {
+        _pendingCall.value = null
+        iceQueue.clear()
+    }
+
     /** Навбати ICE-кандидатҳо (то татбиқи RemoteDescription) */
     val iceQueue = mutableListOf<WsMessage>()
 

@@ -126,7 +126,7 @@ fun OsonApp() {
                     dismissButton = {
                         androidx.compose.material3.TextButton(onClick = {
                             container.wsClient.send(tj.osonaloqa.chat.data.remote.WsMessage(type = "call.reject", chatId = ev.chatId))
-                            container.chatRepository.pendingCall.value = null
+                            container.chatRepository.clearPendingCall()
                             incoming = null
                         }) { Text(stringResource(R.string.cancel)) }
                     },
