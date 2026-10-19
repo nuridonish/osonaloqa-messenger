@@ -5,6 +5,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.net.Uri
+import android.provider.ContactsContract
 import android.os.Build
 import android.provider.ContactsContract
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -154,7 +155,7 @@ fun ChatScreen(chatId: String, onBack: () -> Unit, onCall: (video: Boolean, outg
                 var number = ""
                 context.contentResolver.query(uri, null, null, null, null)?.use { c ->
                     if (c.moveToFirst()) {
-                        name = c.getString(c.getColumnIndexOrThrow(ContactsContract.ContactsContract.Contacts.DISPLAY_NAME)) ?: ""
+                        name = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME)) ?: ""
                     }
                 }
                 if (name.isNotBlank()) {
