@@ -639,7 +639,7 @@ private fun VoiceButton(onVoiceRecorded: (ByteArray, Int) -> Unit, onCircleRecor
                 contentAlignment = Alignment.Center,
             ) {
                 Icon(
-                    if (mode == "circle") Icons.Filled.Stop else Icons.Filled.Send,
+                    if (mode == "circle") Icons.Filled.Stop else Icons.AutoMirrored.Filled.Send,
                     contentDescription = stringResource(R.string.send),
                     tint = MaterialTheme.colorScheme.onPrimary,
                 )
