@@ -29,6 +29,17 @@ android {
         buildConfigField("String", "PROD_URL", "\"${gradleProps.getProperty("OSONALOQA_PROD_URL")}\"")
     }
 
+    signingConfigs {
+        getByName("debug") {
+            val ks = file("debug.keystore")
+            if (ks.exists()) {
+                storeFile = ks
+                storePassword = "android"
+                keyAlias = "androiddebugkey"
+                keyPassword = "android"
+            }
+        }
+    }
     buildTypes {
         debug {
             buildConfigField("String", "BASE_URL", "\"${gradleProps.getProperty("OSONALOQA_DEV_URL")}\"")
