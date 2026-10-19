@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -44,6 +46,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -135,15 +138,6 @@ fun NewChatScreen(onBack: () -> Unit, onOpenRoute: (String) -> Unit, onOpenChat:
                     title = { Text(stringResource(R.string.new_chat), fontWeight = FontWeight.Bold) },
                     navigationIcon = { IconButton(onClick = onBack) { Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = null) } },
                     actions = {
-                        IconButton(onClick = { onOpenRoute("group/new") }) {
-                            Icon(Icons.Filled.GroupAdd, contentDescription = stringResource(R.string.menu_new_group))
-                        }
-                        IconButton(onClick = { onOpenRoute("contact/new") }) {
-                            Icon(Icons.Filled.PersonAdd, contentDescription = stringResource(R.string.step1_new_contact))
-                        }
-                        IconButton(onClick = { onOpenRoute("community/new") }) {
-                            Icon(Icons.Filled.Groups, contentDescription = stringResource(R.string.step1_new_community))
-                        }
                         IconButton(onClick = { searching = !searching }) {
                             Icon(Icons.Filled.Search, contentDescription = stringResource(R.string.search))
                         }
@@ -196,6 +190,41 @@ fun NewChatScreen(onBack: () -> Unit, onOpenRoute: (String) -> Unit, onOpenChat:
         },
     ) { pad ->
         Column(Modifier.padding(pad).fillMaxSize()) {
+            // 3 тугма — ТАНҲО ЯК ҚАТОР, таг-бa-таг
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                androidx.compose.material3.OutlinedButton(
+                    onClick = { onOpenRoute("group/new") },
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(Icons.Filled.GroupAdd, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                        Text(stringResource(R.string.menu_new_group), fontSize = 11.sp, maxLines = 1)
+                    }
+                }
+                androidx.compose.material3.OutlinedButton(
+                    onClick = { onOpenRoute("contact/new") },
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(Icons.Filled.PersonAdd, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                        Text(stringResource(R.string.step1_new_contact), fontSize = 11.sp, maxLines = 1)
+                    }
+                }
+                androidx.compose.material3.OutlinedButton(
+                    onClick = { onOpenRoute("community/new") },
+                    modifier = Modifier.weight(1f),
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(Icons.Filled.Groups, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                        Text(stringResource(R.string.step1_new_community), fontSize = 11.sp, maxLines = 1)
+                    }
+                }
+            }
             HorizontalDivider()
             Row(
                 modifier = Modifier
@@ -326,7 +355,13 @@ fun GroupScreenV2(onBack: () -> Unit, onCreated: (String) -> Unit) {
                 label = { Text(stringResource(R.string.group_name)) },
                 singleLine = true,
             )
-            Row(Modifier.padding(horizontal = 16.dp, vertical = 4.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 4.dp)
+                    .horizontalScroll(rememberScrollState()),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
                 sections.forEachIndexed { i, s ->
                     FilterChip(selected = section == i, onClick = { section = i }, label = { Text("${i + 1}. $s") })
                 }
