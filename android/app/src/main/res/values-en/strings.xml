@@ -222,7 +222,7 @@
     <string name="attach_event">Event</string>
     <string name="poll_question">Question</string>
     <string name="event_title">Event name</string>
-    <string name="event_date">Date & time</string>
+    <string name="event_date">Date &amp; time</string>
     <string name="event_date_hint">e.g.: 25.10 18:00</string>
     <string name="event_add_calendar">📌 Add to calendar</string>
     <string name="voice_record">Voice</string>
