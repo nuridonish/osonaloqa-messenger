@@ -215,4 +215,23 @@
     <string name="contact_sync_hint">Yoqilganda — raqamlar boshqa telefonda ham tez paydo bo‘ladi.</string>
     <string name="contact_settings_blacklist_hint">Qora ro‘yxatdagi raqamlar: ularning xabarlari va qo‘ng‘iroqlari ko‘rinmaydi.</string>
     <string name="help_usage_title">Foydalanuvchi qo‘llanmasi</string>
+    <string name="emoji">Emoji</string>
+    <string name="attach">Ilova qilish</string>
+    <string name="attach_file">Fayl</string>
+    <string name="attach_camera">Kamera</string>
+    <string name="attach_poll">So‘rovnoma</string>
+    <string name="attach_event">Tadbir</string>
+    <string name="poll_question">Savol</string>
+    <string name="event_title">Tadbir nomi</string>
+    <string name="event_date">Sana va vaqt</string>
+    <string name="event_date_hint">masalan: 25.10 18:00</string>
+    <string name="event_add_calendar">📌 Kalendarga qo‘shish</string>
+    <string name="voice_record">Ovozli</string>
+    <string name="voice_circle">Video doira</string>
+    <string name="call_speaker">Dinamik</string>
+    <string name="call_bluetooth">Bluetooth</string>
+    <string name="call_mic">Mikrofon</string>
+    <string name="call_camera">Kamera</string>
+    <string name="call_rec_start">Qo‘ng‘iroqni yozish</string>
+    <string name="call_rec_stop">To‘xtatish</string>
 </resources>

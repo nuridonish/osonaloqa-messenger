@@ -215,4 +215,23 @@
     <string name="contact_sync_hint">عند التفعيل — تظهر الأرقام بسرعة على هاتف آخر أيضاً.</string>
     <string name="contact_settings_blacklist_hint">أرقام القائمة السوداء: لا تظهر رسائلها ومكالماتها.</string>
     <string name="help_usage_title">دليل المستخدم</string>
+    <string name="emoji">إيموجي</string>
+    <string name="attach">إرفاق</string>
+    <string name="attach_file">ملف</string>
+    <string name="attach_camera">الكاميرا</string>
+    <string name="attach_poll">تصويت</string>
+    <string name="attach_event">حدث</string>
+    <string name="poll_question">السؤال</string>
+    <string name="event_title">اسم الحدث</string>
+    <string name="event_date">التاريخ والوقت</string>
+    <string name="event_date_hint">مثال: 25.10 18:00</string>
+    <string name="event_add_calendar">📌 إضافة إلى التقويم</string>
+    <string name="voice_record">رسالة صوتية</string>
+    <string name="voice_circle">فيديو دائري</string>
+    <string name="call_speaker">مكبر الصوت</string>
+    <string name="call_bluetooth">بلوتوث</string>
+    <string name="call_mic">الميكروفون</string>
+    <string name="call_camera">الكاميرا</string>
+    <string name="call_rec_start">تسجيل المكالمة</string>
+    <string name="call_rec_stop">إيقاف</string>
 </resources>

@@ -94,4 +94,23 @@
     <string name="contact_sync_hint">با فعال بودن — شماره‌ها در تلفن دیگر هم سریع می‌آیند.</string>
     <string name="contact_settings_blacklist_hint">شماره‌های لیست سیاه: پیام و تماس آن‌ها نمایش داده نمی‌شود.</string>
     <string name="help_usage_title">راهنمای کاربر</string>
+    <string name="emoji">ایموجی</string>
+    <string name="attach">پیوست</string>
+    <string name="attach_file">فایل</string>
+    <string name="attach_camera">دوربین</string>
+    <string name="attach_poll">نظرسنجی</string>
+    <string name="attach_event">رویداد</string>
+    <string name="poll_question">سؤال</string>
+    <string name="event_title">نام رویداد</string>
+    <string name="event_date">تاریخ و ساعت</string>
+    <string name="event_date_hint">مثلاً: 25.10 18:00</string>
+    <string name="event_add_calendar">📌 افزودن به تقویم</string>
+    <string name="voice_record">پیام صوتی</string>
+    <string name="voice_circle">ویدئو دایره‌ای</string>
+    <string name="call_speaker">بلندگو</string>
+    <string name="call_bluetooth">بلوتوث</string>
+    <string name="call_mic">میکروفون</string>
+    <string name="call_camera">دوربین</string>
+    <string name="call_rec_start">ضبط تماس</string>
+    <string name="call_rec_stop">توقف</string>
 </resources>

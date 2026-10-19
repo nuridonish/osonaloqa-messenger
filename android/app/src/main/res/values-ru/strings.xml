@@ -214,4 +214,23 @@
     <string name="contact_sync_hint">Если включено — номера быстро появятся и на другом телефоне.</string>
     <string name="contact_settings_blacklist_hint">Номера в чёрном списке: сообщения и звонки от них не отображаются.</string>
     <string name="help_usage_title">Руководство пользователя</string>
+    <string name="emoji">Эмодзи</string>
+    <string name="attach">Прикрепить</string>
+    <string name="attach_file">Файл</string>
+    <string name="attach_camera">Камера</string>
+    <string name="attach_poll">Опрос</string>
+    <string name="attach_event">Мероприятие</string>
+    <string name="poll_question">Вопрос</string>
+    <string name="event_title">Название мероприятия</string>
+    <string name="event_date">Дата и время</string>
+    <string name="event_date_hint">например: 25.10 18:00</string>
+    <string name="event_add_calendar">📌 Добавить в календарь</string>
+    <string name="voice_record">Голосовое</string>
+    <string name="voice_circle">Видео-кружок</string>
+    <string name="call_speaker">Громкость</string>
+    <string name="call_bluetooth">Блютуз</string>
+    <string name="call_mic">Микрофон</string>
+    <string name="call_camera">Камера</string>
+    <string name="call_rec_start">Запись звонка</string>
+    <string name="call_rec_stop">Стоп</string>
 </resources>

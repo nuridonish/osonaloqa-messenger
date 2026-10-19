@@ -214,4 +214,23 @@
     <string name="contact_sync_hint">Агар фаъол бошад — рақамҳо дар дигар телефон ҳам фавран меоянд.</string>
     <string name="contact_settings_blacklist_hint">Рақамҳои дар рӯйхати сиёҳ: паём ва занг аз онҳо намоён намешавад.</string>
     <string name="help_usage_title">Дастури истифода</string>
+    <string name="emoji">Эмоҷӣ</string>
+    <string name="attach">Илова кардан</string>
+    <string name="attach_file">Файл</string>
+    <string name="attach_camera">Камера</string>
+    <string name="attach_poll">Опрос</string>
+    <string name="attach_event">Мероприятие</string>
+    <string name="poll_question">Савол</string>
+    <string name="event_title">Номи мероприятие</string>
+    <string name="event_date">Сана ва вақт</string>
+    <string name="event_date_hint">масалан: 25.10 18:00</string>
+    <string name="event_add_calendar">📌 Ба календарь илова кардан</string>
+    <string name="voice_record">Голосовой</string>
+    <string name="voice_circle">Видео-кружок</string>
+    <string name="call_speaker">Динамик</string>
+    <string name="call_bluetooth">Блутуз</string>
+    <string name="call_mic">Микрофон</string>
+    <string name="call_camera">Камера</string>
+    <string name="call_rec_start">Сабти занг</string>
+    <string name="call_rec_stop">Истодан</string>
 </resources>

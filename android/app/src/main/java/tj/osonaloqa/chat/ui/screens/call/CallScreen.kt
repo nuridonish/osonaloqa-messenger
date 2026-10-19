@@ -2,6 +2,8 @@ package tj.osonaloqa.chat.ui.screens.call
 
 import android.Manifest
 import android.content.Context
+import android.media.AudioManager
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -18,8 +20,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.BluetoothAudio
 import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.CallEnd
+import androidx.compose.material.icons.filled.RadioButtonOn
+import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material.icons.filled.BluetoothAudio
+import androidx.compose.material.icons.filled.Call
+import androidx.compose.material.icons.filled.RadioButtonOn
+import androidx.compose.material.icons.filled.VolumeUpEnd
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MicOff
 import androidx.compose.material.icons.filled.Videocam
@@ -132,8 +140,21 @@ class CallSession(
     }
 
     private fun rtcConfig(): PeerConnection.RTCConfiguration {
-        val stun = PeerConnection.IceServer.builder("stun:stun.l.google.com:19302").createIceServer()
-        return PeerConnection.RTCConfiguration(listOf(stun)).apply { sdpSemantics = PeerConnection.SdpSemantics.UNIFIED_PLAN }
+        fun ice(url: String, user: String? = null, pass: String? = null): PeerConnection.IceServer {
+            val b = PeerConnection.IceServer.builder(url)
+            if (user != null) b.setUsername(user)
+            if (pass != null) b.setPassword(pass)
+            return b.createIceServer()
+        }
+        val servers = listOf(
+            ice("stun:stun.l.google.com:19302"),
+            ice("stun:stun1.l.google.com:19302"),
+            ice("turn:openrelay.metered.ca:80", "openrelayproject", "openrelayproject"),
+            ice("turn:openrelay.metered.ca:443", "openrelayproject", "openrelayproject"),
+            ice("turn:openrelay.metered.ca:443?transport=tcp", "openrelayproject", "openrelayproject"),
+            ice("turn:standard.relay.metered.ca:443", "openrelayproject", "openrelayproject"),
+        )
+        return PeerConnection.RTCConfiguration(servers).apply { sdpSemantics = PeerConnection.SdpSemantics.UNIFIED_PLAN }
     }
 
     fun callPeer() {
@@ -265,6 +286,11 @@ fun CallScreen(
     val session = remember { CallSession(context, chatId, outgoing, videoCall) }
     var status by remember { mutableStateOf(if (outgoing) "calling" else "incoming") }
     var micOn by remember { mutableStateOf(true) }
+    var speakerOn by remember { mutableStateOf(false) }
+    var btOn by remember { mutableStateOf(false) }
+    var recording by remember { mutableStateOf(false) }
+    var recorder by remember { mutableStateOf<android.media.MediaRecorder?>(null) }
+    var recFile by remember { mutableStateOf<java.io.File?>(null) }
     var camOn by remember { mutableStateOf(true) }
     var ended by remember { mutableStateOf(false) }
 
@@ -376,36 +402,76 @@ fun CallScreen(
             horizontalArrangement = Arrangement.spacedBy(20.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(
-                Modifier
-                    .size(60.dp)
-                    .background(Color(0xFF22302A), CircleShape)
-                    .clickableNoIndication { micOn = session.toggleMic() },
-                contentAlignment = Alignment.Center,
+            // Идоракунӣ: динамик
+            CallControl(
+                icon = Icons.Filled.VolumeUp,
+                label = stringResource(R.string.call_speaker),
+                active = speakerOn,
             ) {
-                Icon(
-                    if (micOn) Icons.Filled.Mic else Icons.Filled.MicOff,
-                    contentDescription = null,
-                    tint = Color.White,
-                    modifier = Modifier.size(26.dp),
-                )
+                speakerOn = !speakerOn
+                val am = context.getSystemService(android.content.Context.AUDIO_SERVICE) as android.media.AudioManager
+                am.isSpeakerphoneOn = speakerOn
+            }
+            // Блутуз
+            CallControl(
+                icon = Icons.Filled.BluetoothAudio,
+                label = stringResource(R.string.call_bluetooth),
+                active = btOn,
+            ) {
+                btOn = !btOn
+                val am = context.getSystemService(android.content.Context.AUDIO_SERVICE) as android.media.AudioManager
+                @Suppress("DEPRECATION")
+                if (btOn) am.startBluetoothSco() else am.stopBluetoothSco()
+            }
+            // Микрофон
+            CallControl(
+                icon = if (micOn) Icons.Filled.Mic else Icons.Filled.MicOff,
+                label = stringResource(R.string.call_mic),
+                active = micOn,
+            ) {
+                micOn = session.toggleMic()
             }
             if (videoCall) {
-                Box(
-                    Modifier
-                        .size(60.dp)
-                        .background(Color(0xFF22302A), CircleShape)
-                        .clickableNoIndication { camOn = session.toggleVideo() },
-                    contentAlignment = Alignment.Center,
+                CallControl(
+                    icon = if (camOn) Icons.Filled.Videocam else Icons.Filled.VideocamOff,
+                    label = stringResource(R.string.call_camera),
+                    active = camOn,
                 ) {
-                    Icon(
-                        if (camOn) Icons.Filled.Videocam else Icons.Filled.VideocamOff,
-                        contentDescription = null,
-                        tint = Color.White,
-                        modifier = Modifier.size(26.dp),
-                    )
+                    camOn = session.toggleVideo()
                 }
             }
+            // Сабти занг (микрофон → файл)
+            CallControl(
+                icon = if (recording) Icons.Filled.Stop else Icons.Filled.RadioButtonOn,
+                label = if (recording) stringResource(R.string.call_rec_stop) else stringResource(R.string.call_rec_start),
+                active = recording,
+            ) {
+                if (!recording) {
+                    val dir = java.io.File(context.getExternalFilesDir(android.os.Environment.DIRECTORY_MUSIC), "records")
+                    dir.mkdirs()
+                    val f = java.io.File(dir, "call-${System.currentTimeMillis()}.m4a")
+                    recFile = f
+                    val r = if (Build.VERSION.SDK_INT >= 31) android.media.MediaRecorder(context) else @Suppress("DEPRECATION") android.media.MediaRecorder()
+                    r.setAudioSource(android.media.MediaRecorder.AudioSource.MIC)
+                    r.setOutputFormat(android.media.MediaRecorder.OutputFormat.MPEG_4)
+                    r.setAudioEncoder(android.media.MediaRecorder.AudioEncoder.AAC)
+                    r.setOutputFile(f.absolutePath)
+                    runCatching { r.prepare(); r.start(); recorder = r; recording = true }
+                } else {
+                    runCatching { recorder?.stop(); recorder?.release() }
+                    recorder = null
+                    recording = false
+                    recFile?.let { android.widget.Toast.makeText(context, "🎵 ${it.name}", android.widget.Toast.LENGTH_LONG).show() }
+                }
+            }
+        }
+        // Тугмаи охир: қабул (incoming) ва қатъ
+        Row(
+            Modifier
+                .align(Alignment.BottomStart)
+                .padding(bottom = 48.dp, start = 24.dp),
+            horizontalArrangement = Arrangement.spacedBy(20.dp),
+        ) {
             if (!outgoing && status == "incoming") {
                 Box(
                     Modifier
@@ -413,10 +479,8 @@ fun CallScreen(
                         .background(Color(0xFF2BD46B), CircleShape)
                         .clickableNoIndication {
                             session.start()
-                            // SDP-и даъват аз pendingCall — на аз callEvents (ки ICE ҷойгирин мекунад)
                             val inviteSdp = container.chatRepository.pendingCall.value?.sdp
                             session.acceptAsCallee(inviteSdp)
-                            // Кандидатҳои дар навбат мондашуда
                             val queued = container.chatRepository.iceQueue.toList()
                             container.chatRepository.iceQueue.clear()
                             queued.forEach { session.iceArrived(it.candidate, it.sdpMid, it.sdpMLineIndex) }
@@ -434,6 +498,7 @@ fun CallScreen(
                     .clickableNoIndication {
                         if (!ended) {
                             ended = true
+                            runCatching { recorder?.stop(); recorder?.release() }
                             session.hangUp()
                         }
                     },
@@ -442,6 +507,23 @@ fun CallScreen(
                 Icon(Icons.Filled.CallEnd, contentDescription = null, tint = Color.White, modifier = Modifier.size(30.dp))
             }
         }
+    }
+}
+
+@Composable
+private fun CallControl(icon: androidx.compose.ui.graphics.vector.ImageVector, label: String, active: Boolean, onClick: () -> Unit) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(
+            modifier = Modifier
+                .size(52.dp)
+                .background(if (active) Color(0xFF2BD46B) else Color(0xFF22302A), CircleShape)
+                .clickableNoIndication(onClick = onClick),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(icon, contentDescription = label, tint = Color.White, modifier = Modifier.size(24.dp))
+        }
+        Spacer(Modifier.height(4.dp))
+        Text(label, fontSize = 9.sp, color = Color(0xFF9DB2A5))
     }
 }
 
