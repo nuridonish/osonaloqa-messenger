@@ -147,11 +147,10 @@ fun ChatScreen(chatId: String, onBack: () -> Unit, onCall: (video: Boolean, outg
             uploadAndSend(bytes, mime, "document", fileNameOf(context, uri))
         }
     }
-    val pickContact = rememberLauncherForActivityResult(ActivityResultContracts.PickContact()) { uri ->
+    val pickContact = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         if (uri != null) {
             runCatching {
                 var name = ""
-                var number = ""
                 context.contentResolver.query(uri, null, null, null, null)?.use { c ->
                     if (c.moveToFirst()) {
                         name = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME)) ?: ""
@@ -162,6 +161,7 @@ fun ChatScreen(chatId: String, onBack: () -> Unit, onCall: (video: Boolean, outg
                 }
             }
         }
+        Unit
     }
     val cameraUri = remember { mutableStateOf<Uri?>(null) }
     val takePhoto = rememberLauncherForActivityResult(ActivityResultContracts.TakePicture()) { ok ->
@@ -304,7 +304,7 @@ fun ChatScreen(chatId: String, onBack: () -> Unit, onCall: (video: Boolean, outg
                                     leadingIcon = { Icon(Icons.Filled.Person, contentDescription = null) },
                                     onClick = {
                                         attachOpen = false
-                                        pickContact.launch(android.provider.ContactsContract.Contacts.CONTENT_URI)
+                                        pickContact.launch("contacts/contacts")
                                     },
                                 )
                                 DropdownMenuItem(
