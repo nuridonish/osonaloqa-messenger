@@ -154,7 +154,7 @@ fun ChatScreen(chatId: String, onBack: () -> Unit, onCall: (video: Boolean, outg
                 var number = ""
                 context.contentResolver.query(uri, null, null, null, null)?.use { c ->
                     if (c.moveToFirst()) {
-                        name = c.getString(c.getColumnIndexOrThrow(ContactsContract.ContactsContract_CONTACT_DISPLAY_NAME)) ?: ""
+                        name = c.getString(c.getColumnIndexOrThrow(ContactsContract.ContactsContract.Contacts.DISPLAY_NAME)) ?: ""
                     }
                 }
                 if (name.isNotBlank()) {
@@ -524,12 +524,6 @@ private fun VoiceButton(onVoiceRecorded: (ByteArray, Int) -> Unit, onCircleRecor
             r.setVideoSize(480, 480)
             r.setVideoFrameRate(24)
             r.setVideoEncodingBitRate(1_200_000)
-            runCatching {
-                val cam = android.hardware.camera2.CameraCharacteristics.LENS_FACING_FRONT
-                val cm = context.getSystemService(android.hardware.camera2.CameraManager::class.java)
-                val id = cm.cameraIdList.firstOrNull { cm.getCameraCharacteristics(it).get(cam) == android.hardware.camera2.CameraMetadata.LENS_FACING_FRONT }
-                if (id != null) r.set("camera-id", java.lang.Integer.parseInt(id))
-            }
         } else {
             r.setAudioSource(MediaRecorder.AudioSource.MIC)
             r.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)

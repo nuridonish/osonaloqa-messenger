@@ -22,12 +22,16 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BluetoothAudio
 import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.RadioButtonOn
+import androidx.compose.material.icons.filled.CallEnd
+import androidx.compose.material.icons.filled.RadioButtonChecked
+import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material.icons.filled.BluetoothAudio
 import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.RadioButtonOn
-import androidx.compose.material.icons.filled.VolumeUpEnd
+import androidx.compose.material.icons.filled.CallEnd
+import androidx.compose.material.icons.filled.RadioButtonChecked
+import androidx.compose.material.icons.filled.Stop
+
 import androidx.compose.material.icons.filled.Mic
 import androidx.compose.material.icons.filled.MicOff
 import androidx.compose.material.icons.filled.Videocam
@@ -442,7 +446,7 @@ fun CallScreen(
             }
             // Сабти занг (микрофон → файл)
             CallControl(
-                icon = if (recording) Icons.Filled.Stop else Icons.Filled.RadioButtonOn,
+                icon = if (recording) Icons.Filled.Stop else Icons.Filled.RadioButtonChecked,
                 label = if (recording) stringResource(R.string.call_rec_stop) else stringResource(R.string.call_rec_start),
                 active = recording,
             ) {
