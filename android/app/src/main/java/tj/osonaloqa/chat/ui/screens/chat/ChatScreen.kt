@@ -576,11 +576,6 @@ private fun VoiceButton(onVoiceRecorded: (ByteArray, Int) -> Unit, onCircleRecor
         }
     }
 
-            // Пароли иҷозат гирифта шуд — сабт аз нав
-            startRec(mode == "circle")
-        }
-    }
-
     LaunchedEffect(mode) {
         if (mode != null) {
             while (mode != null) {
