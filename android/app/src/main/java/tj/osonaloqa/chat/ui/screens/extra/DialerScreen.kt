@@ -29,6 +29,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Backspace
+import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -70,6 +71,11 @@ fun DialerScreen(onBack: () -> Unit) {
     val scope = androidx.compose.runtime.rememberCoroutineScope()
     var tab by remember { mutableIntStateOf(0) }
     var number by remember { mutableStateOf("") }
+    var pendingCall by remember { mutableStateOf<Intent?>(null) }
+    val callPermLauncher = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) pendingCall?.let { context.startActivity(it) }
+        pendingCall = null
+    }
     var contacts by remember { mutableStateOf<List<Pair<String, String>>>(emptyList()) }
     var permissionGranted by remember {
         mutableStateOf(
@@ -160,17 +166,33 @@ fun DialerScreen(onBack: () -> Unit) {
                         horizontalArrangement = Arrangement.SpaceEvenly,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Spacer(Modifier.width(72.dp))
+                        Spacer(Modifier.width(56.dp))
                         FloatingActionButton(
                             onClick = {
-                                    if (number.isNotBlank()) {
+                                if (number.isNotBlank()) {
                                     scope.launch { container.chatRepository.addRecentCall("", number, outgoing = true) }
-                                    context.startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + number)))
+                                    val i = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + number))
+                                    if (androidx.core.content.ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                                        context.startActivity(i)
+                                    } else {
+                                        callPermLauncher.launch(Manifest.permission.CALL_PHONE)
+                                        pendingCall = i
+                                    }
                                 }
                             },
                             containerColor = MaterialTheme.colorScheme.primary,
                         ) {
                             Icon(Icons.Filled.Call, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary)
+                        }
+                        // SMS
+                        IconButton(onClick = {
+                            if (number.isNotBlank()) {
+                                context.startActivity(Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + number)).apply {
+                                    putExtra("sms_body", "")
+                                })
+                            }
+                        }) {
+                            Icon(Icons.Filled.Chat, contentDescription = "SMS", tint = MaterialTheme.colorScheme.primary)
                         }
                         IconButton(onClick = { if (number.isNotEmpty()) number = number.dropLast(1) }) {
                             Icon(Icons.Filled.Backspace, contentDescription = null)
