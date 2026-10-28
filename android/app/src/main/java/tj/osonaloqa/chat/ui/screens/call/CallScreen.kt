@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BluetoothAudio
@@ -399,119 +400,127 @@ fun CallScreen(
                 fontSize = 16.sp,
             )
         }
-        Row(
+        // Панели поёнӣ: 5 тугмаи идора дар ЯК ҚАТОР (56dp, spaceEvenly)
+        Column(
             Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 48.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-            verticalAlignment = Alignment.CenterVertically,
+                .fillMaxWidth()
+                .padding(bottom = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            // Идоракунӣ: динамик
-            CallControl(
-                icon = Icons.Filled.VolumeUp,
-                label = stringResource(R.string.call_speaker),
-                active = speakerOn,
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                speakerOn = !speakerOn
-                val am = context.getSystemService(android.content.Context.AUDIO_SERVICE) as android.media.AudioManager
-                am.isSpeakerphoneOn = speakerOn
-            }
-            // Блутуз
-            CallControl(
-                icon = Icons.Filled.BluetoothAudio,
-                label = stringResource(R.string.call_bluetooth),
-                active = btOn,
-            ) {
-                btOn = !btOn
-                val am = context.getSystemService(android.content.Context.AUDIO_SERVICE) as android.media.AudioManager
-                @Suppress("DEPRECATION")
-                if (btOn) am.startBluetoothSco() else am.stopBluetoothSco()
-            }
-            // Микрофон
-            CallControl(
-                icon = if (micOn) Icons.Filled.Mic else Icons.Filled.MicOff,
-                label = stringResource(R.string.call_mic),
-                active = micOn,
-            ) {
-                micOn = session.toggleMic()
-            }
-            if (videoCall) {
                 CallControl(
-                    icon = if (camOn) Icons.Filled.Videocam else Icons.Filled.VideocamOff,
-                    label = stringResource(R.string.call_camera),
-                    active = camOn,
+                    icon = Icons.Filled.VolumeUp,
+                    label = stringResource(R.string.call_speaker),
+                    active = speakerOn,
                 ) {
-                    camOn = session.toggleVideo()
+                    speakerOn = !speakerOn
+                    val am = context.getSystemService(android.content.Context.AUDIO_SERVICE) as android.media.AudioManager
+                    am.isSpeakerphoneOn = speakerOn
+                }
+                CallControl(
+                    icon = Icons.Filled.BluetoothAudio,
+                    label = stringResource(R.string.call_bluetooth),
+                    active = btOn,
+                ) {
+                    btOn = !btOn
+                    val am = context.getSystemService(android.content.Context.AUDIO_SERVICE) as android.media.AudioManager
+                    @Suppress("DEPRECATION")
+                    if (btOn) am.startBluetoothSco() else am.stopBluetoothSco()
+                }
+                CallControl(
+                    icon = if (micOn) Icons.Filled.Mic else Icons.Filled.MicOff,
+                    label = stringResource(R.string.call_mic),
+                    active = micOn,
+                ) {
+                    micOn = session.toggleMic()
+                }
+                if (videoCall) {
+                    CallControl(
+                        icon = if (camOn) Icons.Filled.Videocam else Icons.Filled.VideocamOff,
+                        label = stringResource(R.string.call_camera),
+                        active = camOn,
+                    ) {
+                        camOn = session.toggleVideo()
+                    }
+                }
+                CallControl(
+                    icon = if (recording) Icons.Filled.Stop else Icons.Filled.RadioButtonChecked,
+                    label = if (recording) stringResource(R.string.call_rec_stop) else stringResource(R.string.call_rec_start),
+                    active = recording,
+                ) {
+                    if (!recording) {
+                        val dir = java.io.File(context.getExternalFilesDir(android.os.Environment.DIRECTORY_MUSIC), "records")
+                        dir.mkdirs()
+                        val f = java.io.File(dir, "call-" + System.currentTimeMillis() + ".m4a")
+                        recFile = f
+                        val r = if (Build.VERSION.SDK_INT >= 31) android.media.MediaRecorder(context) else @Suppress("DEPRECATION") android.media.MediaRecorder()
+                        r.setAudioSource(android.media.MediaRecorder.AudioSource.MIC)
+                        r.setOutputFormat(android.media.MediaRecorder.OutputFormat.MPEG_4)
+                        r.setAudioEncoder(android.media.MediaRecorder.AudioEncoder.AAC)
+                        r.setOutputFile(f.absolutePath)
+                        runCatching { r.prepare(); r.start(); recorder = r; recording = true }
+                    } else {
+                        runCatching { recorder?.stop(); recorder?.release() }
+                        recorder = null
+                        recording = false
+                        recFile?.let { android.widget.Toast.makeText(context, "🎵 " + it.name, android.widget.Toast.LENGTH_LONG).show() }
+                    }
                 }
             }
-            // Сабти занг (микрофон → файл)
-            CallControl(
-                icon = if (recording) Icons.Filled.Stop else Icons.Filled.RadioButtonChecked,
-                label = if (recording) stringResource(R.string.call_rec_stop) else stringResource(R.string.call_rec_start),
-                active = recording,
+
+            Spacer(Modifier.height(24.dp))
+
+            // Қатори амал: қабул (танҳо incoming) ва қатъ — МАРКАЗОНДА, зери панели идора
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(40.dp),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                if (!recording) {
-                    val dir = java.io.File(context.getExternalFilesDir(android.os.Environment.DIRECTORY_MUSIC), "records")
-                    dir.mkdirs()
-                    val f = java.io.File(dir, "call-${System.currentTimeMillis()}.m4a")
-                    recFile = f
-                    val r = if (Build.VERSION.SDK_INT >= 31) android.media.MediaRecorder(context) else @Suppress("DEPRECATION") android.media.MediaRecorder()
-                    r.setAudioSource(android.media.MediaRecorder.AudioSource.MIC)
-                    r.setOutputFormat(android.media.MediaRecorder.OutputFormat.MPEG_4)
-                    r.setAudioEncoder(android.media.MediaRecorder.AudioEncoder.AAC)
-                    r.setOutputFile(f.absolutePath)
-                    runCatching { r.prepare(); r.start(); recorder = r; recording = true }
-                } else {
-                    runCatching { recorder?.stop(); recorder?.release() }
-                    recorder = null
-                    recording = false
-                    recFile?.let { android.widget.Toast.makeText(context, "🎵 ${it.name}", android.widget.Toast.LENGTH_LONG).show() }
+                if (!outgoing && status == "incoming") {
+                    Box(
+                        Modifier
+                            .size(64.dp)
+                            .background(Color(0xFF2BD46B), CircleShape)
+                            .clickableNoIndication {
+                                session.start()
+                                val inviteSdp = container.chatRepository.pendingCall.value?.sdp
+                                session.acceptAsCallee(inviteSdp)
+                                val queued = container.chatRepository.iceQueue.toList()
+                                container.chatRepository.iceQueue.clear()
+                                queued.forEach { session.iceArrived(it.candidate, it.sdpMid, it.sdpMLineIndex) }
+                                status = "connected"
+                            },
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Icon(Icons.Filled.Call, contentDescription = null, tint = Color.White, modifier = Modifier.size(28.dp))
+                    }
                 }
-            }
-        }
-        // Тугмаи охир: қабул (incoming) ва қатъ
-        Row(
-            Modifier
-                .align(Alignment.BottomStart)
-                .padding(bottom = 48.dp, start = 24.dp),
-            horizontalArrangement = Arrangement.spacedBy(20.dp),
-        ) {
-            if (!outgoing && status == "incoming") {
                 Box(
                     Modifier
-                        .size(68.dp)
-                        .background(Color(0xFF2BD46B), CircleShape)
+                        .size(64.dp)
+                        .background(Color(0xFFD93025), CircleShape)
                         .clickableNoIndication {
-                            session.start()
-                            val inviteSdp = container.chatRepository.pendingCall.value?.sdp
-                            session.acceptAsCallee(inviteSdp)
-                            val queued = container.chatRepository.iceQueue.toList()
-                            container.chatRepository.iceQueue.clear()
-                            queued.forEach { session.iceArrived(it.candidate, it.sdpMid, it.sdpMLineIndex) }
-                            status = "connected"
+                            if (!ended) {
+                                ended = true
+                                runCatching { recorder?.stop(); recorder?.release() }
+                                session.hangUp()
+                            }
                         },
                     contentAlignment = Alignment.Center,
                 ) {
-                    Icon(Icons.Filled.Call, contentDescription = null, tint = Color.White, modifier = Modifier.size(30.dp))
+                    Icon(Icons.Filled.CallEnd, contentDescription = null, tint = Color.White, modifier = Modifier.size(28.dp))
                 }
-            }
-            Box(
-                Modifier
-                    .size(68.dp)
-                    .background(Color(0xFFD93025), CircleShape)
-                    .clickableNoIndication {
-                        if (!ended) {
-                            ended = true
-                            runCatching { recorder?.stop(); recorder?.release() }
-                            session.hangUp()
-                        }
-                    },
-                contentAlignment = Alignment.Center,
-            ) {
-                Icon(Icons.Filled.CallEnd, contentDescription = null, tint = Color.White, modifier = Modifier.size(30.dp))
             }
         }
     }
+}
+
 }
 
 @Composable
@@ -519,7 +528,7 @@ private fun CallControl(icon: androidx.compose.ui.graphics.vector.ImageVector, l
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
-                .size(52.dp)
+                .size(56.dp)
                 .background(if (active) Color(0xFF2BD46B) else Color(0xFF22302A), CircleShape)
                 .clickableNoIndication(onClick = onClick),
             contentAlignment = Alignment.Center,
@@ -527,7 +536,13 @@ private fun CallControl(icon: androidx.compose.ui.graphics.vector.ImageVector, l
             Icon(icon, contentDescription = label, tint = Color.White, modifier = Modifier.size(24.dp))
         }
         Spacer(Modifier.height(4.dp))
-        Text(label, fontSize = 9.sp, color = Color(0xFF9DB2A5))
+        Text(
+            label,
+            fontSize = 10.sp,
+            color = Color(0xFF9DB2A5),
+            maxLines = 1,
+            modifier = Modifier.widthIn(min = 56.dp),
+        )
     }
 }
 
