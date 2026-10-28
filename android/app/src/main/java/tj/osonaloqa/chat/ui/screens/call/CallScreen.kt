@@ -521,8 +521,6 @@ fun CallScreen(
     }
 }
 
-}
-
 @Composable
 private fun CallControl(icon: androidx.compose.ui.graphics.vector.ImageVector, label: String, active: Boolean, onClick: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
